@@ -1,5 +1,5 @@
 function ChecarEspecial(item){
-    if(item.indexOf("CREATE TABLE") > -1 || item.indexOf("create table") > -1){
+    if(item.indexOf("CREATE TABLE") > -1){
         item = item.replace("CREATE TABLE", "public class"); 
         item = item.replace("(", "{"); 
         return item + "\n";
