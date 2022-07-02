@@ -39,25 +39,25 @@
         <p style="max-width: 30%; background-color: rgb(221, 245, 252); border-radius: 5px">
             <b>Entrada:</b><br>
             CREATE TABLE PessoaFisica(<br>
-            &emsp; id INT PRIMARY KEY AUTO_INCREMENT,<br>
-            &emsp; nome VARCHAR(100) NOT NULL,<br>
-            &emsp; idade SMALLINT NOT NULL,<br>
-            &emsp; cpf VARCHAR(14) NOT NULL, <br>
-            &emsp; telefone CHAR(20) NOT NULL,<br>
-            &emsp; saldo float,<br>
+            &emsp;id INT PRIMARY KEY AUTO_INCREMENT,<br>
+            &emsp;nome VARCHAR(100) NOT NULL,<br>
+            &emsp;idade SMALLINT NOT NULL,<br>
+            &emsp;cpf VARCHAR(14) NOT NULL, <br>
+            &emsp;telefone char(20) NOT NULL,<br>
+            &emsp;saldo decimal,<br>
             &emsp;data_nascimento DATE <br>
             );<br>
         </p>
         <p style="max-width: 30%; background-color: rgb(221, 245, 252); border-radius: 5px; margin-left: 5%;">
             <b>Saida:</b><br>
             public class PessoaFisica{<br>
-            &emsp; public int id { get; set; }<br>
-            &emsp; public string nome { get; set; }<br>
-            &emsp; public short idade { get; set; }<br>
-            &emsp; public string cpf { get; set; }<br>
-            &emsp; public string telefone { get; set; }<br>
-            &emsp; public float saldo { get; set; }<br>
-            &emsp; public DateTime data_nascimento { get; set; }<br>
+            &emsp;public int id { get; set; }<br>
+            &emsp;public string nome { get; set; }<br>
+            &emsp;public short idade { get; set; }<br>
+            &emsp;public string cpf { get; set; }<br>
+            &emsp;public string telefone { get; set; }<br>
+            &emsp;public decimal saldo { get; set; }<br>
+            &emsp;public DateTime data_nascimento { get; set; }<br>
             }<br>
         </p>
     </div>

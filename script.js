@@ -51,6 +51,18 @@ function ChecarData(atributo){
 function ChecarLinha(item){
     var variavel = RetornarPropriedade(item.split(' '));
     
+    if(item.indexOf("FLOAT") > -1 || item.indexOf("float") > -1){
+        item =  "    public float" + variavel; 
+        return item; 
+    }
+    if(item.indexOf("DOUBLE") > -1 || item.indexOf("double") > -1){
+        item =  "    public double" + variavel;  
+        return item;
+    }  
+    if(item.indexOf("DECIMAL") > -1 || item.indexOf("decimal") > -1){
+        item =  "    public decimal" + variavel;  
+        return item;
+    } 
     if(item.indexOf("TINYINT") > -1 || item.indexOf("tinyint") > -1){
         item =  "    public sbyte" + variavel; 
         return item; 
@@ -66,14 +78,6 @@ function ChecarLinha(item){
     if(ChecarInteiro(item)){
         item =  "    public int" + variavel; 
         return item; 
-    }  
-    if(item.indexOf("FLOAT") > -1 || item.indexOf("float") > -1){
-        item =  "    public float" + variavel; 
-        return item; 
-    }
-    if(item.indexOf("DOUBLE") > -1 || item.indexOf("double") > -1){
-        item =  "    public double" + variavel;  
-        return item;
     }  
     if(ChecarString(item)){
         item =  "    public string" + variavel;  
