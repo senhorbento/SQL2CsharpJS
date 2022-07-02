@@ -1,3 +1,18 @@
 body{
     background: rgb(123, 211, 238);
 }
+
+.ComoUsar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.Exemplo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

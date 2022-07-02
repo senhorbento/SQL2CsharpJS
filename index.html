@@ -8,14 +8,58 @@
     <title>MySql 2 C#</title>
 </head>
 <body>
-    <h1 align="center">MySql table 2 C# class</h1>
+    <h1 align="center" style="margin-bottom: 5%;">MySql table 2 C# class</h1>
     <div align="center">
-        <textarea name="input" cols="80" rows="20" id="inputText" placeholder="Cole o um código MySQL aqui."></textarea>
-        <textarea name="output" cols="80" rows="20" id="outputText" placeholder="A classe será mostrada aqui."></textarea>
+        <textarea name="input" cols="80" rows="20" id="inputText" placeholder="Coloque o código MySQL aqui."></textarea>
+        <textarea name="output" cols="80" rows="20" id="outputText" placeholder="A classe gerada será mostrada aqui."></textarea>
     </div>
     <div align="center">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <button class="w3-button w3-black" onclick="Transpilar();">Transpilar</button>
+    </div>
+    <div class="ComoUsar">
+        <h2>Como usar?</h2>
+        <ol>
+            <li>
+                Primeiro cole uma tabela escrita em SQL na área de texto do lado esquerda.
+            </li>
+            <li>
+                Depois clique no botão transpilar.
+            </li>
+            <li>
+                O resultado será mostrado na área de texto do lado direito.
+            </li>
+            <li>
+                <b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b>
+            </li>
+        </ol>
+    </div>
+    <h2 align="center" style="margin-top: 5%;">Exemplo</h2>
+    <div class="Exemplo">
+        <p style="max-width: 30%; background-color: rgb(221, 245, 252); border-radius: 5px">
+            <b>Entrada:</b><br>
+            CREATE TABLE PessoaFisica(<br>
+            &emsp; id INT PRIMARY KEY AUTO_INCREMENT,<br>
+            &emsp; nome VARCHAR(100) NOT NULL,<br>
+            &emsp; idade SMALLINT NOT NULL,<br>
+            &emsp; cpf VARCHAR(14) NOT NULL, <br>
+            &emsp; telefone CHAR(20) NOT NULL,<br>
+            &emsp; saldo float,<br>
+            &emsp;data_nascimento DATE <br>
+            );<br>
+        </p>
+        <p style="max-width: 30%; background-color: rgb(221, 245, 252); border-radius: 5px; margin-left: 5%;">
+            <b>Saida:</b><br>
+            public class PessoaFisica{<br>
+            &emsp; public int id { get; set; }<br>
+            &emsp; public string nome { get; set; }<br>
+            &emsp; public short idade { get; set; }<br>
+            &emsp; public string cpf { get; set; }<br>
+            &emsp; public string telefone { get; set; }<br>
+            &emsp; public float saldo { get; set; }<br>
+            &emsp; public DateTime data_nascimento { get; set; }<br>
+            }<br>
+        </p>
     </div>
 </body>
 </html>
