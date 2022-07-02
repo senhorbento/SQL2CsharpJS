@@ -4,6 +4,11 @@ function ChecarEspecial(item){
         item = item.replace("(", "{"); 
         return item + "\n";
     }
+    if(item.indexOf("create table") > -1){
+        item = item.replace("create table", "public class"); 
+        item = item.replace("(", "{"); 
+        return item + "\n";
+    }
     if(item.indexOf(");") > -1){
         item = item.replace(");", "}");
         return item;
