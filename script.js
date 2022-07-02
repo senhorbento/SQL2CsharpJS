@@ -1,17 +1,12 @@
-function ChecarEspecial(item){
-    if(item.indexOf("CREATE TABLE") > -1){
-        item = item.replace("CREATE TABLE", "public class"); 
-        item = item.replace("(", "{"); 
-        return item + "\n";
+function ChecarEspecial(linha){
+    if(linha.toUpperCase().indexOf("CREATE TABLE") > -1){
+        linha = linha.replace(/CREATE TABLE/gi, "public class"); 
+        linha = linha.replace("(", "{"); 
+        return linha + "\n";
     }
-    if(item.indexOf("create table") > -1){
-        item = item.replace("create table", "public class"); 
-        item = item.replace("(", "{"); 
-        return item + "\n";
-    }
-    if(item.indexOf(");") > -1){
-        item = item.replace(");", "}");
-        return item;
+    if(linha.toUpperCase().indexOf(");") > -1){
+        linha = linha.replace(");", "}");
+        return linha;
     }
     return "";
 }
@@ -30,67 +25,67 @@ function RetornarPropriedade(dividir){
 }
 
 function ChecarInteiro(atributo){
-    if(atributo.indexOf("MEDIUMINT") > -1 || atributo.indexOf("mediumint") > -1)
+    if(atributo.toUpperCase().indexOf("MEDIUMINT") > -1)
         return true;
-    if(atributo.indexOf("INT") > -1 || atributo.indexOf("int") > -1)
+    if(atributo.toUpperCase().indexOf("INT") > -1)
         return true;
     return false;
 }
 
 function ChecarString(atributo){
-    if(atributo.indexOf("VARCHAR") > -1 || atributo.indexOf("varchar") > -1)
+    if(atributo.toUpperCase().indexOf("VARCHAR") > -1)
         return true;
-    if(atributo.indexOf("CHAR") > -1 || atributo.indexOf("char") > -1)
+    if(atributo.toUpperCase().indexOf("CHAR") > -1)
         return true;
     return false;
 }
 
 function ChecarData(atributo){
-    if(atributo.indexOf("DATETIME") > -1 || atributo.indexOf("datetime") > -1)
+    if(atributo.toUpperCase().indexOf("DATETIME") > -1)
         return true;
-    if(atributo.indexOf("DATE") > -1 || atributo.indexOf("date") > -1)
+    if(atributo.toUpperCase().indexOf("DATE") > -1)
         return true;
     return false;
 }
 
-function ChecarLinha(item){
-    var variavel = RetornarPropriedade(item.split(' '));
+function ChecarLinha(atributo){
+    var variavel = RetornarPropriedade(atributo.split(' '));
     
-    if(item.indexOf("FLOAT") > -1 || item.indexOf("float") > -1){
-        item =  "    public float " + variavel; 
-        return item; 
+    if(atributo.toUpperCase().indexOf("FLOAT") > -1){
+        atributo =  "    public float " + variavel; 
+        return atributo; 
     }
-    if(item.indexOf("DOUBLE") > -1 || item.indexOf("double") > -1){
-        item =  "    public double " + variavel;  
-        return item;
+    if(atributo.toUpperCase().indexOf("DOUBLE") > -1){
+        atributo =  "    public double " + variavel;  
+        return atributo;
     }  
-    if(item.indexOf("DECIMAL") > -1 || item.indexOf("decimal") > -1){
-        item =  "    public decimal " + variavel;  
-        return item;
+    if(atributo.toUpperCase().indexOf("DECIMAL") > -1){
+        atributo =  "    public decimal " + variavel;  
+        return atributo;
     } 
-    if(item.indexOf("TINYINT") > -1 || item.indexOf("tinyint") > -1){
-        item =  "    public sbyte " + variavel; 
-        return item; 
+    if(atributo.toUpperCase().indexOf("TINYINT") > -1){
+        atributo =  "    public sbyte " + variavel; 
+        return atributo; 
     } 
-    if(item.indexOf("SMALLINT") > -1 || item.indexOf("smallint") > -1){
-        item =  "    public short " + variavel; 
-        return item; 
+    if(atributo.toUpperCase().indexOf("SMALLINT") > -1){
+        atributo =  "    public short " + variavel; 
+        return atributo; 
     } 
-    if(item.indexOf("BIGINT") > -1 || item.indexOf("bigint") > -1){
-        item =  "    public long " + variavel; 
-        return item; 
+    if(atributo.toUpperCase().indexOf("BIGINT") > -1){
+        atributo =  "    public long " + variavel; 
+        return atributo; 
     }
-    if(ChecarInteiro(item)){
-        item =  "    public int " + variavel; 
-        return item; 
+    if(ChecarInteiro(atributo)){
+        atributo =  "    public int " + variavel; 
+        return atributo; 
     }  
-    if(ChecarString(item)){
-        item =  "    public string " + variavel;  
-        return item;
+    if(ChecarString(atributo)){
+        atributo =  "    public string " + variavel;  
+        return atributo;
     }
-    if(ChecarData(item)){
-        item =  "    public DateTime " + variavel;  
-        return item;
+    if(ChecarData(atributo)){
+        atributo =  "    public DateTime " + variavel;  
+        return atributo;
     }
     return "";
 }
@@ -99,15 +94,12 @@ function Transpilar(){
     var input = (document.getElementById("inputText").value).split(/\r?\n/); 
     document.getElementById('outputText').value = "";
 
-    input.forEach(function(item){
+    input.forEach(function(linha){
         var classe;
-        classe = ChecarEspecial(item);
+        classe = ChecarEspecial(linha);
+        if(classe == "")
+            classe = ChecarLinha(linha); 
         if(classe != "")
             document.getElementById('outputText').value += classe;
-        else{
-            classe = ChecarLinha(item);
-            if(classe != "")
-                document.getElementById('outputText').value += classe;
-        }  
     });
 }
