@@ -22,12 +22,30 @@ function ChecarLinha(item){
         item = item.replace(");", "}");
         return item;
     } 
-    if(item.indexOf("INT") > -1 || item.indexOf("int") > -1){
+    if(item.indexOf("TINYINT") > -1 || item.indexOf("tinyint") > -1){
+        var dividir = item.split(' ');
+        var variavel = RetornarVariavel(dividir);
+        item =  "    public sbyte " + variavel + _PROPRIEDADE_; 
+        return item; 
+    } 
+    if(item.indexOf("SMALLINT") > -1 || item.indexOf("smallint") > -1){
+        var dividir = item.split(' ');
+        var variavel = RetornarVariavel(dividir);
+        item =  "    public short " + variavel + _PROPRIEDADE_; 
+        return item; 
+    } 
+    if(item.indexOf("BIGINT") > -1 || item.indexOf("bigint") > -1){
+        var dividir = item.split(' ');
+        var variavel = RetornarVariavel(dividir);
+        item =  "    public long " + variavel + _PROPRIEDADE_; 
+        return item; 
+    }
+    if(PodeSerInt(item)){
         var dividir = item.split(' ');
         var variavel = RetornarVariavel(dividir);
         item =  "    public int " + variavel + _PROPRIEDADE_; 
         return item; 
-    }    
+    }   
     if(item.indexOf("FLOAT") > -1 || item.indexOf("float") > -1){
         var dividir = item.split(' ');
         var variavel = RetornarVariavel(dividir);
@@ -53,6 +71,14 @@ function ChecarLinha(item){
         return item;
     }
     return "";
+}
+
+function PodeSerInt(atributo){
+    if(atributo.indexOf("MEDIUMINT") > -1 || atributo.indexOf("mediumint") > -1)
+        return true;
+    if(atributo.indexOf("INT") > -1 || atributo.indexOf("int") > -1)
+        return true;
+    return false;
 }
 
 function PodeSerString(atributo){
