@@ -4,7 +4,7 @@ function ChecarEspecial(linha){
         linha = linha.replace("(", "{"); 
         return linha + "\n";
     }
-    if(linha.toUpperCase().indexOf(");") > -1){
+    if(linha.indexOf(");") > -1){
         linha = linha.replace(");", "}");
         return linha;
     }
@@ -25,53 +25,54 @@ function RetornarPropriedade(dividir){
 }
 
 function ChecarInteiro(atributo){
-    if(atributo.toUpperCase().indexOf("MEDIUMINT") > -1)
+    if(atributo.indexOf("MEDIUMINT") > -1)
         return true;
-    if(atributo.toUpperCase().indexOf("INT") > -1)
+    if(atributo.indexOf("INT") > -1)
         return true;
     return false;
 }
 
 function ChecarString(atributo){
-    if(atributo.toUpperCase().indexOf("VARCHAR") > -1)
+    if(atributo.indexOf("VARCHAR") > -1)
         return true;
-    if(atributo.toUpperCase().indexOf("CHAR") > -1)
+    if(atributo.indexOf("CHAR") > -1)
         return true;
     return false;
 }
 
 function ChecarData(atributo){
-    if(atributo.toUpperCase().indexOf("DATETIME") > -1)
+    if(atributo.indexOf("DATETIME") > -1)
         return true;
-    if(atributo.toUpperCase().indexOf("DATE") > -1)
+    if(atributo.indexOf("DATE") > -1)
         return true;
     return false;
 }
 
 function ChecarLinha(atributo){
     var variavel = RetornarPropriedade(atributo.split(' '));
-    
-    if(atributo.toUpperCase().indexOf("FLOAT") > -1){
+    atributo = atributo.toUpperCase();
+
+    if(atributo.indexOf("FLOAT") > -1){
         atributo =  "    public float " + variavel; 
         return atributo; 
     }
-    if(atributo.toUpperCase().indexOf("DOUBLE") > -1){
+    if(atributo.indexOf("DOUBLE") > -1){
         atributo =  "    public double " + variavel;  
         return atributo;
     }  
-    if(atributo.toUpperCase().indexOf("DECIMAL") > -1){
+    if(atributo.indexOf("DECIMAL") > -1){
         atributo =  "    public decimal " + variavel;  
         return atributo;
     } 
-    if(atributo.toUpperCase().indexOf("TINYINT") > -1){
+    if(atributo.indexOf("TINYINT") > -1){
         atributo =  "    public sbyte " + variavel; 
         return atributo; 
     } 
-    if(atributo.toUpperCase().indexOf("SMALLINT") > -1){
+    if(atributo.indexOf("SMALLINT") > -1){
         atributo =  "    public short " + variavel; 
         return atributo; 
     } 
-    if(atributo.toUpperCase().indexOf("BIGINT") > -1){
+    if(atributo.indexOf("BIGINT") > -1){
         atributo =  "    public long " + variavel; 
         return atributo; 
     }
