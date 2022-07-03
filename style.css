@@ -16,3 +16,13 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+.Box{
+    max-width: 30%; 
+    background-color: rgb(221, 245, 252); 
+    border-radius: 5px;
+}
+
+.SaidaExemplo{
+    margin-left: 5%;
+}

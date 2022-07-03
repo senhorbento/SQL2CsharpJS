@@ -23,23 +23,15 @@
     <div class="ComoUsar">
         <h2>Como usar?</h2>
         <ol>
-            <li>
-                Primeiro cole uma tabela escrita em SQL na área de texto do lado esquerda.
-            </li>
-            <li>
-                Depois clique no botão transpilar.
-            </li>
-            <li>
-                O resultado será mostrado na área de texto do lado direito.
-            </li>
-            <li>
-                <b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b>
-            </li>
+            <li>Primeiro cole uma tabela escrita em SQL na área de texto do lado esquerda.</li>
+            <li>Depois clique no botão transpilar.</li>
+            <li>O resultado será mostrado na área de texto do lado direito.</li>
+            <li><b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b></li>
         </ol>
     </div>
     <h2 align="center">Exemplo</h2>
     <div class="Exemplo">
-        <p style="max-width: 30%; background-color: rgb(221, 245, 252); border-radius: 5px">
+        <p class="Box">
             <b>Entrada:</b><br>
             CREATE TABLE PessoaFisica(<br>
             &emsp;id INT PRIMARY KEY AUTO_INCREMENT,<br>
@@ -51,7 +43,7 @@
             &emsp;data_nascimento DATE <br>
             );<br>
         </p>
-        <p style="max-width: 30%; background-color: rgb(221, 245, 252); border-radius: 5px; margin-left: 5%;">
+        <p class="Box SaidaExemplo">
             <b>Saida:</b><br>
             public class PessoaFisica{<br>
             &emsp;public int id { get; set; }<br>
