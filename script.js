@@ -1,9 +1,13 @@
 function ChecarEspecial(linha){
+    if(linha == "(")
+        return "{\n";
+    if(linha == ")")
+        return "}\n";
     if(linha.toUpperCase().indexOf("CREATE TABLE") > -1){
         linha = linha.replace(/CREATE TABLE/gi, "public class"); 
         linha = linha.replace("(", "{"); 
         return linha + "\n";
-    }
+    } 
     if(linha.indexOf(");") > -1){
         linha = linha.replace(");", "}");
         return linha;
@@ -33,7 +37,7 @@ function ChecarLinha(atributo){
     var nome = RetornarNomeTipo(atributo.split(' '));
     var tipo = nome[1].toUpperCase();
     nome = nome[0];
-    
+
     if(tipo.indexOf("FLOAT") > -1){
         atributo =  "    public float " + nome; 
         return atributo; 
