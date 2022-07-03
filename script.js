@@ -24,30 +24,6 @@ function RetornarPropriedade(dividir){
     return variavel +  _PROPRIEDADE_ + "\n";
 }
 
-function ChecarInteiro(atributo){
-    if(atributo.indexOf("MEDIUMINT") > -1)
-        return true;
-    if(atributo.indexOf("INT") > -1)
-        return true;
-    return false;
-}
-
-function ChecarString(atributo){
-    if(atributo.indexOf("VARCHAR") > -1)
-        return true;
-    if(atributo.indexOf("CHAR") > -1)
-        return true;
-    return false;
-}
-
-function ChecarData(atributo){
-    if(atributo.indexOf("DATETIME") > -1)
-        return true;
-    if(atributo.indexOf("DATE") > -1)
-        return true;
-    return false;
-}
-
 function ChecarLinha(atributo){
     var variavel = RetornarPropriedade(atributo.split(' '));
     atributo = atributo.toUpperCase();
@@ -76,15 +52,15 @@ function ChecarLinha(atributo){
         atributo =  "    public long " + variavel; 
         return atributo; 
     }
-    if(ChecarInteiro(atributo)){
+    if(atributo.indexOf("INT") > -1){
         atributo =  "    public int " + variavel; 
         return atributo; 
     }  
-    if(ChecarString(atributo)){
+    if(atributo.indexOf("CHAR") > -1){
         atributo =  "    public string " + variavel;  
         return atributo;
     }
-    if(ChecarData(atributo)){
+    if(atributo.indexOf("DATE") > -1){
         atributo =  "    public DateTime " + variavel;  
         return atributo;
     }
