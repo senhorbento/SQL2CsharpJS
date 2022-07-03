@@ -11,57 +11,63 @@ function ChecarEspecial(linha){
     return "";
 }
 
-function RetornarPropriedade(dividir){
+function RetornarNomeTipo(dividir){
     const _PROPRIEDADE_ = " { get; set; }";
-    var variavel, qtd = 0;
+    var variavel = [];
+    var qtd = 0;
 
     dividir.forEach(function (parte){
+        if(parte != '' && qtd == 1){
+            variavel.push(parte);
+            qtd++;
+        }
         if(parte != '' && qtd == 0){
-            variavel = parte;
+            variavel.push(parte +  _PROPRIEDADE_ + "\n");
             qtd++;
         }
     });
-    return variavel +  _PROPRIEDADE_ + "\n";
+    return variavel;
 }
 
 function ChecarLinha(atributo){
-    var variavel = RetornarPropriedade(atributo.split(' '));
-    atributo = atributo.toUpperCase();
-
-    if(atributo.indexOf("FLOAT") > -1){
-        atributo =  "    public float " + variavel; 
+    var nome = RetornarNomeTipo(atributo.split(' '));
+    var tipo = nome[1].toUpperCase();
+    nome = nome[0];
+    
+    if(tipo.indexOf("FLOAT") > -1){
+        atributo =  "    public float " + nome; 
         return atributo; 
     }
-    if(atributo.indexOf("DOUBLE") > -1){
-        atributo =  "    public double " + variavel;  
+    if(tipo.indexOf("DOUBLE") > -1){
+        atributo =  "    public double " + nome;  
         return atributo;
     }  
-    if(atributo.indexOf("DECIMAL") > -1){
-        atributo =  "    public decimal " + variavel;  
+    if(tipo.indexOf("DECIMAL") > -1){
+        atributo =  "    public decimal " + nome;  
         return atributo;
     } 
-    if(atributo.indexOf("TINYINT") > -1){
-        atributo =  "    public sbyte " + variavel; 
+    if(tipo.indexOf("TINYINT") > -1){
+        atributo =  "    public sbyte " + nome; 
         return atributo; 
     } 
-    if(atributo.indexOf("SMALLINT") > -1){
-        atributo =  "    public short " + variavel; 
+    if(tipo.indexOf("SMALLINT") > -1){
+        atributo =  "    public short " + nome; 
         return atributo; 
     } 
-    if(atributo.indexOf("BIGINT") > -1){
-        atributo =  "    public long " + variavel; 
+    if(tipo.indexOf("BIGINT") > -1){
+        atributo =  "    public long " + nome; 
         return atributo; 
     }
-    if(atributo.indexOf("INT") > -1){
-        atributo =  "    public int " + variavel; 
+    if(tipo.indexOf("INT") > -1){
+        atributo =  "    public int " + nome; 
         return atributo; 
     }  
-    if(atributo.indexOf("CHAR") > -1){
-        atributo =  "    public string " + variavel;  
+    if(tipo.indexOf("CHAR") > -1){
+        atributo =  "    public string " + nome;  
         return atributo;
     }
-    if(atributo.indexOf("DATE") > -1){
-        atributo =  "    public DateTime " + variavel;  
+    if(tipo.indexOf("DATE") > -1){
+        atributo =  "    public DateTime " + nome;  
         return atributo;
     }
     return "";
