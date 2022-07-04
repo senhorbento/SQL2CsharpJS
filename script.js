@@ -10,7 +10,7 @@ function ChecarEspecial(linha){
     } 
     if(linha.indexOf(");") > -1){
         linha = linha.replace(");", "}");
-        return linha;
+        return linha + "\n";
     }
     return "";
 }
@@ -83,10 +83,12 @@ function Transpilar(){
 
     input.forEach(function(linha){
         var classe;
-        classe = ChecarEspecial(linha);
-        if(classe == "")
-            classe = ChecarLinha(linha); 
-        if(classe != "")
-            document.getElementById('outputText').value += classe;
+        if(linha != ""){
+            classe = ChecarEspecial(linha);
+            if(classe == "")
+                classe = ChecarLinha(linha); 
+            if(classe != "")
+                document.getElementById('outputText').value += classe;
+        }
     });
 }
