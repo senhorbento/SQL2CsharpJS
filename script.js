@@ -1,18 +1,21 @@
-function ChecarEspecial(linha){
+function ChecarEspecial(linha){	
+    console.log(linha.length)
     if(linha == "(")
         return "{\n";
     if(linha == ")")
         return "}\n";
-    if(linha.toUpperCase().indexOf("CREATE TABLE") > -1){
-        linha = linha.replace(/CREATE TABLE/gi, "public class"); 
-        linha = linha.replace("(", "{"); 
-        return linha + "\n";
-    } 
+    if(linha == "" || linha.length == 1)
+        return -2;
     if(linha.indexOf(");") > -1){
         linha = linha.replace(");", "}");
         return linha + "\n";
     }
-    return "";
+    if(linha.toUpperCase().indexOf("CREATE TABLE") > -1){
+        linha = linha.replace(/CREATE TABLE/gi, "public class"); 
+        linha = linha.replace("(", "{"); 
+        return linha + "\n";
+    }
+    return -1;
 }
 
 function RetornarNomeTipo(dividir){
@@ -74,7 +77,7 @@ function ChecarLinha(atributo){
         atributo =  "    public DateTime " + nome;  
         return atributo;
     }
-    return "";
+    return -1;
 }
 
 function Transpilar(){
@@ -83,12 +86,10 @@ function Transpilar(){
 
     input.forEach(function(linha){
         var classe;
-        if(linha != ""){
-            classe = ChecarEspecial(linha);
-            if(classe == "")
-                classe = ChecarLinha(linha); 
-            if(classe != "")
-                document.getElementById('outputText').value += classe;
-        }
+        classe = ChecarEspecial(linha);
+        if(classe == -1)
+            classe = ChecarLinha(linha);
+        if(classe.length > 0)
+            document.getElementById('outputText').value += classe;
     });
 }
