@@ -1,21 +1,30 @@
-function ChecarEspecial(linha){	
-    console.log(linha.length)
-    if(linha == "(")
-        return "{\n";
-    if(linha == ")")
-        return "}\n";
-    if(linha == "" || linha.length == 1)
-        return -2;
-    if(linha.indexOf(");") > -1){
-        linha = linha.replace(");", "}");
-        return linha + "\n";
+function ChecarCriacaoTabela(checar){
+    if(checar.toUpperCase().indexOf("CREATE TABLE") > -1){
+        checar = checar.replace(/CREATE TABLE/gi, "public class");  
+        return checar + "\n";
     }
-    if(linha.toUpperCase().indexOf("CREATE TABLE") > -1){
-        linha = linha.replace(/CREATE TABLE/gi, "public class"); 
-        linha = linha.replace("(", "{"); 
-        return linha + "\n";
+    return checar;
+}
+
+function TrocarCaracterEspecial(checar){
+    var modificado = checar;
+    var qtd = 0;
+    if(modificado.indexOf("(") > -1){
+        modificado = modificado.replace("(", "{"); 
+        qtd++;
     }
-    return -1;
+    if(modificado.indexOf(");") > -1){
+        modificado = modificado.replace(");", "}"); 
+        qtd++;
+    }
+    if(modificado.indexOf(")") > -1){
+        modificado = modificado.replace(")", "}");
+        qtd++;
+    }
+    if(modificado.match(/[a-z]/i)){
+        qtd++;
+    }
+    return qtd > 0 ? modificado : "";
 }
 
 function RetornarNomeTipo(dividir){
@@ -36,7 +45,7 @@ function RetornarNomeTipo(dividir){
     return variavel;
 }
 
-function ChecarLinha(atributo){
+function ChecarAtributo(atributo){
     var nome = RetornarNomeTipo(atributo.split(' '));
     var tipo = nome[1].toUpperCase();
     nome = nome[0];
@@ -77,7 +86,7 @@ function ChecarLinha(atributo){
         atributo =  "    public DateTime " + nome;  
         return atributo;
     }
-    return -1;
+    return atributo;
 }
 
 function Transpilar(){
@@ -85,11 +94,18 @@ function Transpilar(){
     document.getElementById('outputText').value = "";
 
     input.forEach(function(linha){
-        var classe;
-        classe = ChecarEspecial(linha);
-        if(classe == -1)
-            classe = ChecarLinha(linha);
-        if(classe.length > 0)
+        var classe, modificado;
+        modificado = TrocarCaracterEspecial(linha);
+        if(modificado != "" && modificado.match(/[a-z]/i)){
+            classe = ChecarAtributo(linha);
+            if(classe == linha)
+                classe = ChecarCriacaoTabela(linha);
+            if(classe == linha)
+                classe = -1;
+        }
+        else
+            classe = modificado + "\n";
+        if(modificado != "" && classe != -1)
             document.getElementById('outputText').value += classe;
     });
 }
