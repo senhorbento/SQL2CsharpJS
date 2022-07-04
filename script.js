@@ -1,6 +1,8 @@
 function ChecarCriacaoTabela(checar){
     if(checar.toUpperCase().indexOf("CREATE TABLE") > -1){
         checar = checar.replace(/CREATE TABLE/gi, "public class");  
+        if(checar.indexOf("(") > -1)
+            checar = checar.replace("(", "{"); 
         return checar + "\n";
     }
     return checar;
