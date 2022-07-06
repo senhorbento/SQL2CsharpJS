@@ -10,8 +10,10 @@
     <script type = "text/javascript" src = "script.js"></script>
     <title>MySql 2 C#</title>
 </head>
+<header class="ContainerHeader">
+    <h1 class="TextoHeader">MySql table 2 C# class</h1>
+</header>
 <body>
-    <h1 align="center" style="margin-bottom: 3%;">MySql table 2 C# class</h1>
     <div align="center">
         <textarea name="input" cols="80" rows="20" id="inputText" placeholder="Coloque o código MySQL aqui."></textarea>
         <textarea name="output" cols="80" rows="20" id="outputText" placeholder="A classe gerada será mostrada aqui."></textarea>
@@ -23,7 +25,7 @@
     <div class="ComoUsar">
         <h2>Como usar?</h2>
         <ol>
-            <li>Primeiro cole uma tabela escrita em SQL na área de texto do lado esquerda.</li>
+            <li>Primeiro coloque uma tabela em SQL na área de texto do lado esquerda.</li>
             <li>Depois clique no botão transpilar.</li>
             <li>O resultado será mostrado na área de texto do lado direito.</li>
             <li><b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b></li>
@@ -33,6 +35,7 @@
     <div class="Exemplo">
         <p class="Box">
             <b>Entrada:</b><br>
+            <br>
             CREATE TABLE PessoaFisica(<br>
             &emsp;id INT PRIMARY KEY AUTO_INCREMENT,<br>
             &emsp;nome VARCHAR(100) NOT NULL,<br>
@@ -45,6 +48,7 @@
         </p>
         <p class="Box SaidaExemplo">
             <b>Saida:</b><br>
+            <br>
             public class PessoaFisica{<br>
             &emsp;public int id { get; set; }<br>
             &emsp;public string nome { get; set; }<br>
@@ -57,4 +61,13 @@
         </p>
     </div>
 </body>
+<footer class="ContainerFooter">
+    <p class="TextoFooter">Feito por Bento me encontre em:</p>
+    <a href="https://www.twitter.com/_MisterBento/" target="_blank">
+        <img src="/img/twitter.png" alt="Twitter" class="Link_img" title="Twitter"></a>
+    <a href="https://www.linkedin.com/in/henrique-bento-97a4b8231/" target="_blank">
+        <img src="/img/linkedin.png" alt="Linkedin" class="Link_img" title="Linkedin"></a>
+    <a href="https://github.com/senhorbento/" target="_blank">
+        <img src="/img/github.png" alt="Github" class="Link_img" title="Github"></a>
+</footer>
 </html>

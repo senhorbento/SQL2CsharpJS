@@ -1,5 +1,19 @@
 body{
-    background: rgb(123, 211, 238);
+    background: rgb(100, 181, 206);
+}
+
+.ContainerHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.TextoHeader{
+    color: black;
+    font-family: Serif;
 }
 
 .ComoUsar{
@@ -13,16 +27,37 @@ body{
 .Exemplo{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
 .Box{
-    max-width: 30%; 
-    background-color: rgb(221, 245, 252); 
-    border-radius: 5px;
+    background-color: rgb(221, 245, 252);
 }
 
 .SaidaExemplo{
     margin-left: 5%;
+}
+
+.ContainerFooter{
+    background-color: #393e83;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    justify-content: center;
+    height: auto;
+    width: 100vw;
+    
+}
+
+.TextoFooter{
+    color: white;
+}
+
+.Link_img{
+    min-width: 15px;
+    max-width: 30px;
+    margin-left: 5px;
+    border-radius: 50%;
 }
