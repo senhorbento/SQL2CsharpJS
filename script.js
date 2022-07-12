@@ -48,44 +48,45 @@ function RetornarNomeTipo(dividir){
 }
 
 function ChecarAtributo(atributo){
+    const VISIBILIDADE = "    public";
     var nome = RetornarNomeTipo(atributo.split(' '));
     var tipo = nome[1].toUpperCase();
     nome = nome[0];
 
     if(tipo.indexOf("FLOAT") > -1){
-        atributo =  "    public float " + nome; 
+        atributo =  VISIBILIDADE + " float " + nome; 
         return atributo; 
     }
     if(tipo.indexOf("DOUBLE") > -1){
-        atributo =  "    public double " + nome;  
+        atributo =   VISIBILIDADE + "double " + nome;  
         return atributo;
     }  
     if(tipo.indexOf("DECIMAL") > -1){
-        atributo =  "    public decimal " + nome;  
+        atributo =   VISIBILIDADE + "decimal " + nome;  
         return atributo;
     } 
     if(tipo.indexOf("TINYINT") > -1){
-        atributo =  "    public sbyte " + nome; 
+        atributo =   VISIBILIDADE + "sbyte " + nome; 
         return atributo; 
     } 
     if(tipo.indexOf("SMALLINT") > -1){
-        atributo =  "    public short " + nome; 
+        atributo =   VISIBILIDADE + "short " + nome; 
         return atributo; 
     } 
     if(tipo.indexOf("BIGINT") > -1){
-        atributo =  "    public long " + nome; 
+        atributo =   VISIBILIDADE + "long " + nome; 
         return atributo; 
     }
     if(tipo.indexOf("INT") > -1){
-        atributo =  "    public int " + nome; 
+        atributo =   VISIBILIDADE + "int " + nome; 
         return atributo; 
     }  
     if(tipo.indexOf("CHAR") > -1){
-        atributo =  "    public string " + nome;  
+        atributo =   VISIBILIDADE + "string " + nome;  
         return atributo;
     }
     if(tipo.indexOf("DATE") > -1){
-        atributo =  "    public DateTime " + nome;  
+        atributo =   VISIBILIDADE + "DateTime " + nome;  
         return atributo;
     }
     return atributo;
