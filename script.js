@@ -48,13 +48,13 @@ function RetornarNomeTipo(dividir){
 }
 
 function ChecarAtributo(atributo){
-    const VISIBILIDADE = "    public";
+    const VISIBILIDADE = "    public ";
     var nome = RetornarNomeTipo(atributo.split(' '));
     var tipo = nome[1].toUpperCase();
     nome = nome[0];
 
     if(tipo.indexOf("FLOAT") > -1){
-        atributo =  VISIBILIDADE + " float " + nome; 
+        atributo =  VISIBILIDADE + "float " + nome; 
         return atributo; 
     }
     if(tipo.indexOf("DOUBLE") > -1){
