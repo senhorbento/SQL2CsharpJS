@@ -1,36 +1,33 @@
+const _PROPRIEDADE_ = " { get; set; }";
+const VISIBILIDADE = "    public ";
+
 function ChecarCriacaoTabela(checar){
     if(checar.toUpperCase().indexOf("CREATE TABLE") > -1){
         checar = checar.replace(/CREATE TABLE/gi, "public class");  
-        if(checar.indexOf("(") > -1)
-            checar = checar.replace("(", "{"); 
+        if(checar.indexOf("(") > -1) checar = checar.replace("(", "{"); 
         return checar + "\n";
     }
     return checar;
 }
 
 function TrocarCaracterEspecial(checar){
-    var modificado = checar;
     var qtd = 0;
-    if(modificado.indexOf("(") > -1){
-        modificado = modificado.replace("(", "{"); 
+    if(checar.indexOf("(") > -1){
+        checar = checar.replace("(", "{"); 
         qtd++;
     }
-    if(modificado.indexOf(");") > -1){
-        modificado = modificado.replace(");", "}"); 
+    if(checar.indexOf(");") > -1){
+        checar = checar.replace(");", "}"); 
         qtd++;
     }
-    if(modificado.indexOf(")") > -1){
-        modificado = modificado.replace(")", "}");
+    if(checar.indexOf(")") > -1){
+        checar = checar.replace(")", "}");
         qtd++;
     }
-    if(modificado.match(/[a-z]/i)){
-        qtd++;
-    }
-    return qtd > 0 ? modificado : "";
+    return checar;
 }
 
 function RetornarNomeTipo(dividir){
-    const _PROPRIEDADE_ = " { get; set; }";
     var variavel = [];
     var qtd = 0;
 
@@ -47,48 +44,33 @@ function RetornarNomeTipo(dividir){
     return variavel;
 }
 
+function Inteiros(tipo){
+    if(tipo.indexOf("TINYINT") > -1)  return "sbyte ";
+    if(tipo.indexOf("SMALLINT") > -1) return "short "; 
+    if(tipo.indexOf("BIGINT") > -1)   return "long "; 
+    if(tipo.indexOf("INT") > -1)      return "int "; 
+    return false;
+}
+
+function OutrosTipos(tipo){
+    if(tipo.indexOf("FLOAT") > -1)   return "float "; 
+    if(tipo.indexOf("DOUBLE") > -1)  return "double ";  
+    if(tipo.indexOf("DECIMAL") > -1) return "decimal ";  
+    if(tipo.indexOf("CHAR") > -1)    return "string ";  
+    if(tipo.indexOf("DATE") > -1)    return "DateTime ";
+    return false;
+}
+
 function ChecarAtributo(atributo){
-    const VISIBILIDADE = "    public ";
     var nome = RetornarNomeTipo(atributo.split(' '));
+
+    if(nome[1] == undefined) return atributo;
+
     var tipo = nome[1].toUpperCase();
     nome = nome[0];
 
-    if(tipo.indexOf("FLOAT") > -1){
-        atributo =  VISIBILIDADE + "float " + nome; 
-        return atributo; 
-    }
-    if(tipo.indexOf("DOUBLE") > -1){
-        atributo =   VISIBILIDADE + "double " + nome;  
-        return atributo;
-    }  
-    if(tipo.indexOf("DECIMAL") > -1){
-        atributo =   VISIBILIDADE + "decimal " + nome;  
-        return atributo;
-    } 
-    if(tipo.indexOf("TINYINT") > -1){
-        atributo =   VISIBILIDADE + "sbyte " + nome; 
-        return atributo; 
-    } 
-    if(tipo.indexOf("SMALLINT") > -1){
-        atributo =   VISIBILIDADE + "short " + nome; 
-        return atributo; 
-    } 
-    if(tipo.indexOf("BIGINT") > -1){
-        atributo =   VISIBILIDADE + "long " + nome; 
-        return atributo; 
-    }
-    if(tipo.indexOf("INT") > -1){
-        atributo =   VISIBILIDADE + "int " + nome; 
-        return atributo; 
-    }  
-    if(tipo.indexOf("CHAR") > -1){
-        atributo =   VISIBILIDADE + "string " + nome;  
-        return atributo;
-    }
-    if(tipo.indexOf("DATE") > -1){
-        atributo =   VISIBILIDADE + "DateTime " + nome;  
-        return atributo;
-    }
+    if(Inteiros(tipo)) return VISIBILIDADE + Inteiros(tipo) + nome;
+    if(OutrosTipos(tipo)) return VISIBILIDADE + OutrosTipos(tipo) + nome;
     return atributo;
 }
 
@@ -99,16 +81,14 @@ function Transpilar(){
     input.forEach(function(linha){
         var classe, modificado;
         modificado = TrocarCaracterEspecial(linha);
-        if(modificado != "" && modificado.match(/[a-z]/i)){
+
+        if(modificado.match(/[a-z]/i)){
             classe = ChecarAtributo(linha);
-            if(classe == linha)
-                classe = ChecarCriacaoTabela(linha);
-            if(classe == linha)
-                classe = -1;
+
+            if(classe == linha) classe = ChecarCriacaoTabela(linha);
+            if(classe == linha) classe = -1;
         }
-        else
-            classe = modificado + "\n";
-        if(modificado != "" && classe != -1)
-            document.getElementById('outputText').value += classe;
+        else classe = modificado + "\n";
+        if(modificado != "" && classe != -1) document.getElementById('outputText').value += classe;
     });
 }
