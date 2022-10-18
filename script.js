@@ -17,8 +17,7 @@ function TrocarCaracterEspecial(checar){
 }
 
 function RetornarNomeTipo(dividir){
-    let variavel = [];
-    let qtd = 0;
+    let variavel = [], qtd = 0;
 
     dividir.forEach(function (parte){
         if(parte != '' && qtd == 1){
@@ -63,10 +62,13 @@ function ChecarAtributo(atributo){
     return atributo;
 }
 
+function LimparSaida(){
+    document.getElementById('outputText').value = "";
+}
+
 function Transpilar(){
     let input = (document.getElementById("inputText").value).split(/\r?\n/); 
-    document.getElementById('outputText').value = "";
-
+    LimparSaida();
     input.forEach(function(linha){
         let classe;
         let modificado = TrocarCaracterEspecial(linha);
