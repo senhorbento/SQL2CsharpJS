@@ -1,75 +1,77 @@
 <!DOCTYPE html>
 <html lang="eng">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width initial-scale=1.0">
-    <meta name="author" content="Senhor Bento">
-    <meta name="keywords" content="SQL, C#, MySQL to C#, MySQL para C#, Converter MySQL para C#", "MySQL 2 C#">
-    <meta name="description" content="Um simples utilitário que transpila tabelas de MySQL para classes em C#.">
-	<link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="script.js"></script>
-    <title>MySql 2 C#</title>
-</head>
-<header class="ContainerHeader">
-    <h1 class="TextoHeader">MySql table 2 C# class</h1>
-</header>
-<body>
-    <div align="center">
-        <textarea name="input" cols="80" rows="20" id="inputText" placeholder="Coloque o código MySQL aqui." style="width: 40vw; height: 40vh"></textarea>
-        <textarea name="output" cols="80" rows="20" id="outputText" placeholder="A classe gerada será mostrada aqui." style="width: 40vw; height: 40vh"></textarea>
-    </div>
-    <div align="center">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+        <meta name="author" content="Senhor Bento">
+        <meta name="keywords" content="SQL, C#, MySQL to C#, MySQL para C#, Converter MySQL para C#", "MySQL 2 C#">
+        <meta name="description" content="Um simples utilitário que transpila tabelas de MySQL para classes em C#.">
+        <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <button class="w3-button w3-black" onclick="Transpilar();">Transpilar tabela</button>
-    </div>
-    <div class="ComoUsar">
-        <h2>Como usar?</h2>
-        <ol>
-            <li>Primeiro coloque uma tabela em SQL na área de texto do lado esquerda.</li>
-            <li>Depois clique no botão transpilar.</li>
-            <li>O resultado será mostrado na área de texto do lado direito.</li>
-            <li><b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b></li>
-        </ol>
-    </div>
-    <h2 align="center">Exemplo</h2>
-    <div class="Exemplo">
-        <p class="Box">
-            <b>Entrada:</b><br>
-            <br>
-            CREATE TABLE PessoaFisica(<br>
-            &emsp;id INT PRIMARY KEY AUTO_INCREMENT,<br>
-            &emsp;nome VARCHAR(100) NOT NULL,<br>
-            &emsp;idade SMALLINT NOT NULL,<br>
-            &emsp;cpf VARCHAR(14) NOT NULL, <br>
-            &emsp;telefone char(20) NOT NULL,<br>
-            &emsp;saldo decimal,<br>
-            &emsp;data_nascimento DATE <br>
-            );<br>
-        </p>
-        <p class="Box SaidaExemplo">
-            <b>Saida:</b><br>
-            <br>
-            public class PessoaFisica{<br>
-            &emsp;public int id { get; set; }<br>
-            &emsp;public string nome { get; set; }<br>
-            &emsp;public short idade { get; set; }<br>
-            &emsp;public string cpf { get; set; }<br>
-            &emsp;public string telefone { get; set; }<br>
-            &emsp;public decimal saldo { get; set; }<br>
-            &emsp;public DateTime data_nascimento { get; set; }<br>
-            }<br>
-        </p>
-    </div>
-</body>
-<footer class="ContainerFooter">
-    <p class="TextoFooter">Feito por Bento me encontre em:</p>
-    <a href="https://www.twitter.com/_MisterBento/" target="_blank">
-        <img src="img/twitter.png" alt="Twitter" class="Link_img" title="Twitter"></a>
-    <a href="https://www.linkedin.com/in/henrique-bento-97a4b8231/" target="_blank">
-        <img src="img/linkedin.png" alt="Linkedin" class="Link_img" title="Linkedin"></a>
-    <a href="https://github.com/senhorbento/" target="_blank">
-        <img src="img/github.png" alt="Github" class="Link_img" title="Github"></a>
+        <script type="text/javascript" src="script.js"></script>
+        <title>MySql 2 C#</title>
+    </head>
+    <header>
+        <h1 class="TextoHeader" align="center">MySql table 2 C# class</h1>
+    </header>
+    <body>
+        <div align="center">
+            <textarea name="input" cols="80" rows="20" id="inputText" placeholder="Insira o código MySQL aqui." class="BoxTexto"></textarea>
+            <textarea name="output" cols="80" rows="20" id="outputText" placeholder="A classe gerada será mostrada aqui." class="BoxTexto"></textarea>
+        </div>
+        <div align="center">
+            <button class="w3-button w3-black" onclick="Transpilar();">Transpilar tabela</button>
+        </div>
+        <section class="ComoUsar">
+            <h2>Como usar?</h2>
+            <ol>
+                <li>Primeiro coloque uma tabela em SQL na área de texto do lado esquerda.</li>
+                <li>Depois clique no botão transpilar.</li>
+                <li>O resultado será mostrado na área de texto do lado direito.</li>
+                <li><b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b></li>
+            </ol>
+        </section>
+        <h2 align="center">Exemplo</h2>
+        <section class="ConteinerExemplo">
+            <div class="Box">
+                <dl>
+                    <dt><b>Entrada:</b></dt>
+                    <dd>CREATE TABLE PessoaFisica(</dd>
+                    <dd>&emsp;id INT PRIMARY KEY AUTO_INCREMENT,</dd>
+                    <dd>&emsp;nome VARCHAR(100) NOT NULL,</dd>
+                    <dd>&emsp;idade SMALLINT NOT NULL,</dd>
+                    <dd>&emsp;cpf VARCHAR(14) NOT NULL,</dd>
+                    <dd>&emsp;telefone char(20) NOT NULL,</dd>
+                    <dd>&emsp;data_nascimento DATE</dd>
+                    <dd>&emsp;saldo decimal,</dd>
+                    <dd>);</dd>
+                </dl>
+            </div>
+            <div class="Box">
+                <dl>
+                    <dt><b>Saida:</b></dt>
+                    <dd>public class PessoaFisica{</dd>
+                    <dd>&emsp;public int id { get; set; }</dd>
+                    <dd>&emsp;public string nome { get; set; }</dd>
+                    <dd>&emsp;public short idade { get; set; }</dd>
+                    <dd>&emsp;public string cpf { get; set; }</dd>
+                    <dd>&emsp;public string telefone { get; set; }</dd>
+                    <dd>&emsp;public DateTime data_nascimento { get; set; }</dd>
+                    <dd>&emsp;public decimal saldo { get; set; }</dd>
+                    <dd>}</dd>
+                </dl>
+            </div>
+        </section> 
+    </body>
+    <footer class="ContainerFooter">
+        <p class="TextoFooter">Feito por Bento me encontre em:</p>
+        <a href="https://www.twitter.com/_senhorbento/" target="_blank">
+            <img src="img/twitter.png" alt="Twitter" class="Link_img" title="Twitter"></a>
+        <a href="https://www.linkedin.com/in/henrique-bento-97a4b8231/" target="_blank">
+            <img src="img/linkedin.png" alt="Linkedin" class="Link_img" title="Linkedin"></a>
+        <a href="https://github.com/senhorbento/" target="_blank">
+            <img src="img/github.png" alt="Github" class="Link_img" title="Github"></a>
         <a href="https://senhorbento.github.io/" target="_blank">
             <img src="img/site.png" alt="Site" class="Link_img" title="Site"></a>
-</footer>
+    </footer>
 </html>
