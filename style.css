@@ -22,7 +22,7 @@ body{
     margin-top: 1%;
 }
 
-.ConteinerExemplo{
+.ConteinerExplicacao{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -30,7 +30,7 @@ body{
 }
 
 .Box{
-    background-color: rgb(221, 245, 252);
+    background-color: rgb(215, 240, 250);
     border-radius: 0px 10px 0px 10px;
 }
 
