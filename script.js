@@ -4,8 +4,7 @@ const VISIBILIDADE = "    public ";
 function ChecarCriacaoTabela(checar){
     if(checar.toUpperCase().indexOf("CREATE TABLE") > -1){
         checar = checar.replace(/CREATE TABLE/gi, "public class");  
-        if(checar.indexOf("(") > -1) checar = checar.replace("(", "{"); 
-            return checar + "\n";
+        return checar + "\n";
     }
     return checar;
 }
@@ -69,13 +68,13 @@ function Transpilar(){
     document.getElementById('outputText').value = "";
 
     input.forEach(function(linha){
-        let classe, modificado;
-        modificado = TrocarCaracterEspecial(linha);
+        let classe;
+        let modificado = TrocarCaracterEspecial(linha);
 
         if(modificado.match(/[a-z]/i)){
             classe = ChecarAtributo(linha);
 
-            if(classe == linha) classe = ChecarCriacaoTabela(linha);
+            if(classe == linha) classe = ChecarCriacaoTabela(modificado);
             if(classe == linha) classe = -1;
         }
         else classe = modificado + "\n";
