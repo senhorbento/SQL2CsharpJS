@@ -5,31 +5,21 @@ function ChecarCriacaoTabela(checar){
     if(checar.toUpperCase().indexOf("CREATE TABLE") > -1){
         checar = checar.replace(/CREATE TABLE/gi, "public class");  
         if(checar.indexOf("(") > -1) checar = checar.replace("(", "{"); 
-        return checar + "\n";
+            return checar + "\n";
     }
     return checar;
 }
 
 function TrocarCaracterEspecial(checar){
-    var qtd = 0;
-    if(checar.indexOf("(") > -1){
-        checar = checar.replace("(", "{"); 
-        qtd++;
-    }
-    if(checar.indexOf(");") > -1){
-        checar = checar.replace(");", "}"); 
-        qtd++;
-    }
-    if(checar.indexOf(")") > -1){
-        checar = checar.replace(")", "}");
-        qtd++;
-    }
+    if(checar.indexOf("(") > -1)  checar = checar.replace("(", "{");
+    if(checar.indexOf(");") > -1) checar = checar.replace(");", "}");
+    if(checar.indexOf(")") > -1)  checar = checar.replace(")", "}");
     return checar;
 }
 
 function RetornarNomeTipo(dividir){
-    var variavel = [];
-    var qtd = 0;
+    let variavel = [];
+    let qtd = 0;
 
     dividir.forEach(function (parte){
         if(parte != '' && qtd == 1){
@@ -62,11 +52,11 @@ function OutrosTipos(tipo){
 }
 
 function ChecarAtributo(atributo){
-    var nome = RetornarNomeTipo(atributo.split(' '));
+    let nome = RetornarNomeTipo(atributo.split(' '));
 
     if(nome[1] == undefined) return atributo;
 
-    var tipo = nome[1].toUpperCase();
+    let tipo = nome[1].toUpperCase();
     nome = nome[0];
 
     if(Inteiros(tipo)) return VISIBILIDADE + Inteiros(tipo) + nome;
@@ -75,11 +65,11 @@ function ChecarAtributo(atributo){
 }
 
 function Transpilar(){
-    var input = (document.getElementById("inputText").value).split(/\r?\n/); 
+    let input = (document.getElementById("inputText").value).split(/\r?\n/); 
     document.getElementById('outputText').value = "";
 
     input.forEach(function(linha){
-        var classe, modificado;
+        let classe, modificado;
         modificado = TrocarCaracterEspecial(linha);
 
         if(modificado.match(/[a-z]/i)){
