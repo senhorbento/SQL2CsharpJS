@@ -1,5 +1,5 @@
 const _PROPRIEDADE_ = " { get; set; }";
-const VISIBILIDADE = "    public ";
+const _VISIBILIDADE_ = "    public ";
 
 function LimparSaida(){
     document.getElementById('outputText').value = "";
@@ -38,7 +38,7 @@ function ChecarAtributo(atributo){
     let tipo = nome[1].toUpperCase();
     nome = nome[0];
 
-    if(ProcurarTipos(tipo)) return VISIBILIDADE + ProcurarTipos(tipo) + nome;
+    if(ProcurarTipos(tipo)) return _VISIBILIDADE_ + ProcurarTipos(tipo) + nome;
     return atributo;
 }
 
