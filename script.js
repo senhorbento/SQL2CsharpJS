@@ -30,32 +30,33 @@ function TrocarCaracterEspecial(linha){
     return linha;
 }
 
-function ChecarAtributo(atributo){
-    let nome = RetornarNomeTipo(atributo.split(' '));
+function ChecarAtributo(linha){
+    let nome, tipo;
+    let nomeTipo = RetornarNomeTipo(linha.split(' '));
 
-    if(nome[1] == undefined) return atributo;
+    if(nomeTipo[1] == undefined) return linha;
 
-    let tipo = nome[1].toUpperCase();
-    nome = nome[0];
+    nome = nomeTipo[0];
+    tipo = nomeTipo[1].toUpperCase();
 
     if(ProcurarTipos(tipo)) return _VISIBILIDADE_ + ProcurarTipos(tipo) + nome;
-    return atributo;
+    return linha;
 }
 
 function RetornarNomeTipo(linha){
-    let variavel = [], qtd = 0;
+    let nomeTipo = [], qtd = 0;
 
     linha.forEach(function (parte){
         if(parte != '' && qtd == 1){
-            variavel.push(parte);
+            nomeTipo.push(parte);
             qtd++;
         }
         if(parte != '' && qtd == 0){
-            variavel.push(parte +  _PROPRIEDADE_ + "\n");
+            nomeTipo.push(parte +  _PROPRIEDADE_ + "\n");
             qtd++;
         } 
     });
-    return variavel;
+    return nomeTipo;
 }
 
 function ProcurarTipos(linha){
