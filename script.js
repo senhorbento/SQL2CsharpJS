@@ -67,7 +67,8 @@ function ProcurarTipos(linha){
     if(linha.indexOf("FLOAT") > -1)    return "float "; 
     if(linha.indexOf("DOUBLE") > -1)   return "double ";  
     if(linha.indexOf("DECIMAL") > -1)  return "decimal ";  
-    if(linha.indexOf("CHAR") > -1)     return "string ";  
+    if(linha.indexOf("CHAR") > -1)     return "string "; 
+    if(linha.indexOf("TEXT") > -1)     return "string ";  
     if(linha.indexOf("DATE") > -1)     return "DateTime ";
     return false;
 }
