@@ -1,38 +1,46 @@
 <!DOCTYPE html>
 <html lang="eng">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width initial-scale=1.0">
-        <meta name="author" content="Senhor Bento">
-        <meta name="keywords" content="SQL, C#, MySQL to C#, MySQL para C#, Converter MySQL para C#", "MySQL 2 C#">
-        <meta name="description" content="Um simples utilitário que transpila tabelas de MySQL para classes em C#.">
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <script type="text/javascript" src="script.js"></script>
-        <title>MySql 2 C#</title>
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="author" content="Senhor Bento">
+    <meta name="keywords" content="SQL, C#, MySQL to C#, MySQL para C#, Converter MySQL para C#, MySQL 2 C#">
+    <meta name="description" content="Um simples utilitário que transpila tabelas de MySQL para classes em C#.">
+    <meta name="theme-color" content="#2f8fad">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="script.js"></script>
+    <title>MySql 2 C#</title>
+</head>
+
+<body>
     <header>
-        <h1 class="TextoHeader" align="center">MySql table 2 C# class</h1>
+        <h1 class="TextoHeader">MySql table 2 C# class</h1>
     </header>
-    <body>
-        <div align="center">
-            <textarea name="input" cols="80" rows="20" id="inputText" placeholder="Insira o código MySQL aqui." class="BoxTexto"></textarea>
-            <textarea name="output" cols="80" rows="20" id="outputText" placeholder="A classe gerada será mostrada aqui." class="BoxTexto"></textarea>
+    <main>
+        <div>
+            <textarea name="input" cols="80" rows="20" id="inputText" placeholder="Insira o código MySQL aqui."
+                class="BoxTexto"></textarea>
+            <textarea name="output" cols="80" rows="20" id="outputText"
+                placeholder="A classe gerada será mostrada aqui." class="BoxTexto"></textarea>
         </div>
-        <div align="center">
+        <div>
             <button class="w3-button w3-black" onclick="Transpilar();">Transpilar tabela</button>
         </div>
-        <section class="ComoUsar">
-            <h2>Como usar?</h2>
-            <ol>
-                <li>Primeiro coloque uma tabela em SQL na área de texto do lado esquerda.</li>
-                <li>Depois clique no botão transpilar.</li>
-                <li>O resultado será mostrado na área de texto do lado direito.</li>
-                <li><b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b></li>
-            </ol>
-        </section>
-        <h2 align="center">Exemplo</h2>
-        <section class="ConteinerExplicacao">
+    </main>
+    <section class="ComoUsar">
+        <h2>Como usar?</h2>
+        <ol>
+            <li>Primeiro coloque uma tabela em SQL na área de texto do lado esquerda.</li>
+            <li>Depois clique no botão transpilar.</li>
+            <li>O resultado será mostrado na área de texto do lado direito.</li>
+            <li><b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b></li>
+        </ol>
+    </section>
+    <section class="ConteinerExplicacao">
+        <h2>Exemplo</h2>
+        <div class="Boxes">
             <div class="Box">
                 <dl>
                     <dt><b>Entrada:</b></dt>
@@ -61,17 +69,22 @@
                     <dd>}</dd>
                 </dl>
             </div>
-        </section> 
-    </body>
+        </div>
+    </section>
     <footer class="ContainerFooter">
         <p class="TextoFooter">Feito por Bento me encontre em:</p>
         <a href="https://www.twitter.com/_senhorbento/" target="_blank">
-            <img src="img/twitter.png" alt="Twitter" class="Link_img" title="Twitter"></a>
+            <img src="img/twitter.png" alt="Twitter" class="Link_img" title="Twitter">
+        </a>
         <a href="https://www.linkedin.com/in/henrique-bento-97a4b8231/" target="_blank">
-            <img src="img/linkedin.png" alt="Linkedin" class="Link_img" title="Linkedin"></a>
+            <img src="img/linkedin.png" alt="Linkedin" class="Link_img" title="Linkedin">
+        </a>
         <a href="https://github.com/senhorbento/" target="_blank">
-            <img src="img/github.png" alt="Github" class="Link_img" title="Github"></a>
+            <img src="img/github.png" alt="Github" class="Link_img" title="Github">
+        </a>
         <a href="https://senhorbento.github.io/" target="_blank">
-            <img src="img/site.png" alt="Site" class="Link_img" title="Site"></a>
+            <img src="img/site.png" alt="Site" class="Link_img" title="Site">
+        </a>
     </footer>
+</body>
 </html>
