@@ -7,8 +7,7 @@
     <meta name="author" content="Senhor Bento">
     <meta name="keywords" content="SQL, C#, MySQL to C#, MySQL para C#, Converter MySQL para C#, MySQL 2 C#">
     <meta name="description" content="Um simples utilitário que transpila tabelas de MySQL para classes em C#.">
-    <meta name="theme-color" content="#2f8fad">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta name="theme-color" content="#0093E9">
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="script.js"></script>
     <title>MySql 2 C#</title>
@@ -16,20 +15,16 @@
 
 <body>
     <header>
-        <h1 class="TextoHeader">MySql table 2 C# class</h1>
+        <h1>MySql table 2 C# class</h1>
     </header>
     <main>
-        <div>
-            <textarea name="input" cols="80" rows="20" id="inputText" placeholder="Insira o código MySQL aqui."
-                class="BoxTexto"></textarea>
-            <textarea name="output" cols="80" rows="20" id="outputText"
-                placeholder="A classe gerada será mostrada aqui." class="BoxTexto"></textarea>
+        <div class="container-box">
+            <textarea name="input" id="inputText" placeholder="Insira o código MySQL aqui." class="BoxTexto"></textarea>
+            <textarea name="output" id="outputText" placeholder="A classe gerada será mostrada aqui." class="BoxTexto"></textarea>
         </div>
-        <div>
-            <button class="w3-button w3-black" onclick="Transpilar();">Transpilar tabela</button>
-        </div>
+        <button class="transpiler-button" onclick="Transpilar();">Transpilar</button>
     </main>
-    <section class="ComoUsar">
+    <section class="container-description">
         <h2>Como usar?</h2>
         <ol>
             <li>Primeiro coloque uma tabela em SQL na área de texto do lado esquerda.</li>
@@ -38,52 +33,48 @@
             <li><b>Observação: É importante os atributos estarem um por linha como no exemplo abaixo.</b></li>
         </ol>
     </section>
-    <section class="ConteinerExplicacao">
+    <section class="container-exemplo">
         <h2>Exemplo</h2>
-        <div class="Boxes">
-            <div class="Box">
-                <dl>
-                    <dt><b>Entrada:</b></dt>
-                    <dd>CREATE TABLE PessoaFisica(</dd>
-                    <dd>&emsp;id INT PRIMARY KEY AUTO_INCREMENT,</dd>
-                    <dd>&emsp;nome VARCHAR(100) NOT NULL,</dd>
-                    <dd>&emsp;idade SMALLINT NOT NULL,</dd>
-                    <dd>&emsp;cpf VARCHAR(14) NOT NULL,</dd>
-                    <dd>&emsp;telefone char(20) NOT NULL,</dd>
-                    <dd>&emsp;data_nascimento DATE,</dd>
-                    <dd>&emsp;saldo decimal</dd>
-                    <dd>);</dd>
-                </dl>
+        <div class="container-box">
+            <div class="box-example">
+                <p><b>Entrada:</b></p>
+                <p>CREATE TABLE PessoaFisica(</p>
+                <p>&emsp;id INT PRIMARY KEY AUTO_INCREMENT,</p>
+                <p>&emsp;nome VARCHAR(100) NOT NULL,</p>
+                <p>&emsp;idade SMALLINT NOT NULL,</p>
+                <p>&emsp;cpf VARCHAR(14) NOT NULL,</p>
+                <p>&emsp;telefone char(20) NOT NULL,</p>
+                <p>&emsp;data_nascimento DATE,</p>
+                <p>&emsp;saldo decimal</p>
+                <p>);</p>
             </div>
-            <div class="Box">
-                <dl>
-                    <dt><b>Saida:</b></dt>
-                    <dd>public class PessoaFisica{</dd>
-                    <dd>&emsp;public int id { get; set; }</dd>
-                    <dd>&emsp;public string nome { get; set; }</dd>
-                    <dd>&emsp;public short idade { get; set; }</dd>
-                    <dd>&emsp;public string cpf { get; set; }</dd>
-                    <dd>&emsp;public string telefone { get; set; }</dd>
-                    <dd>&emsp;public DateTime data_nascimento { get; set; }</dd>
-                    <dd>&emsp;public decimal saldo { get; set; }</dd>
-                    <dd>}</dd>
-                </dl>
+            <div class="box-example">
+                <p><b>Saida:</b></p>
+                <p>public class PessoaFisica{</p>
+                <p>&emsp;public int id { get; set; }</p>
+                <p>&emsp;public string nome { get; set; }</p>
+                <p>&emsp;public short idade { get; set; }</p>
+                <p>&emsp;public string cpf { get; set; }</p>
+                <p>&emsp;public string telefone { get; set; }</p>
+                <p>&emsp;public DateTime data_nascimento { get; set; }</p>
+                <p>&emsp;public decimal saldo { get; set; }</p>
+                <p>}</p>
             </div>
         </div>
     </section>
-    <footer class="ContainerFooter">
+    <footer>
         <p class="TextoFooter">Feito por Bento me encontre em:</p>
         <a href="https://www.twitter.com/_senhorbento/" target="_blank">
-            <img src="img/twitter.png" alt="Twitter" class="Link_img" title="Twitter">
+            <img src="img/twitter.png" alt="Twitter" class="link_img" title="Twitter">
         </a>
         <a href="https://www.linkedin.com/in/henrique-bento-97a4b8231/" target="_blank">
-            <img src="img/linkedin.png" alt="Linkedin" class="Link_img" title="Linkedin">
+            <img src="img/linkedin.png" alt="Linkedin" class="link_img" title="Linkedin">
         </a>
         <a href="https://github.com/senhorbento/" target="_blank">
-            <img src="img/github.png" alt="Github" class="Link_img" title="Github">
+            <img src="img/github.png" alt="Github" class="link_img" title="Github">
         </a>
         <a href="https://senhorbento.com.br/" target="_blank">
-            <img src="img/site.png" alt="Site" class="Link_img" title="Site">
+            <img src="img/site.png" alt="Site" class="link_img" title="Site">
         </a>
     </footer>
 </body>
