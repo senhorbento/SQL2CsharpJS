@@ -8,10 +8,8 @@ body {
 
 header {
     font-family: system-ui;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    display: flex;
-    
+    margin-bottom: 1%;
+    display: flex;    
 }
 
 main {
@@ -43,8 +41,6 @@ footer {
     align-items: center;
     height: 3rem;
 }
-
-
 
 .transpiler-button{
     transition-duration: 0.4s;
