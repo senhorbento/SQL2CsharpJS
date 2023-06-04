@@ -5,7 +5,7 @@ function LimparSaida(){
     document.getElementById('outputText').value = "";
 }
 
-function Transpilar(){
+function Converter(){
     LimparSaida();
     let input = (document.getElementById("inputText").value).split(/\r?\n/); 
     input.forEach(function(linha){
