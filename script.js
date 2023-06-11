@@ -19,7 +19,8 @@ function Converter(){
             if(classe == linha) classe = -1;
         }
         else classe = modificado + "\n";
-        if(modificado != "" && classe != -1) document.getElementById('outputText').value += classe;
+        console.log(modificado);
+        if(modificado != "" && classe != -1 && classe != modificado) document.getElementById('outputText').value += classe;
     });
 }
 
