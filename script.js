@@ -60,17 +60,19 @@ function RetornarNomeTipo(linha){
 }
 
 function ProcurarTipos(linha){
-    if(linha.indexOf("TINYINT") > -1)  return "sbyte ";
-    if(linha.indexOf("SMALLINT") > -1) return "short "; 
-    if(linha.indexOf("BIGINT") > -1)   return "long "; 
-    if(linha.indexOf("INT") > -1)      return "int ";
-    if(linha.indexOf("FLOAT") > -1)    return "float "; 
-    if(linha.indexOf("DOUBLE") > -1)   return "double ";  
-    if(linha.indexOf("DECIMAL") > -1)  return "decimal ";  
-    if(linha.indexOf("CHAR") > -1)     return "string "; 
-    if(linha.indexOf("TEXT") > -1)     return "string ";  
-    if(linha.indexOf("BOOLEAN") > -1)  return "bool ";
-    if(linha.indexOf("DATE") > -1)     return "DateTime ";
+    if(linha.indexOf("TINYINT") > -1)   return "sbyte ";
+    if(linha.indexOf("SMALLINT") > -1)  return "short "; 
+    if(linha.indexOf("BIGINT") > -1)    return "long "; 
+    if(linha.indexOf("INT") > -1)       return "int ";
+    if(linha.indexOf("FLOAT") > -1)     return "float "; 
+    if(linha.indexOf("DOUBLE") > -1)    return "double ";  
+    if(linha.indexOf("DECIMAL") > -1)   return "decimal ";  
+    if(linha.indexOf("CHAR") > -1)      return "string "; 
+    if(linha.indexOf("TEXT") > -1)      return "string ";  
+    if(linha.indexOf("BOOLEAN") > -1)   return "bool ";
+    if(linha.indexOf("VARBINARY") > -1) return "byte[] ";
+    if(linha.indexOf("BLOB") > -1)      return "byte[] ";
+    if(linha.indexOf("DATE") > -1)      return "DateTime ";
     return false;
 }
 
