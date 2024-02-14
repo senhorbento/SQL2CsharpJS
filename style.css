@@ -1,4 +1,5 @@
-p, body {
+p,
+body {
     margin: 0;
 }
 
@@ -8,8 +9,7 @@ body {
 
 header {
     font-family: system-ui;
-    margin-bottom: 1%;
-    display: flex;    
+    display: flex;
 }
 
 main {
@@ -28,7 +28,8 @@ textarea {
     resize: none;
 }
 
-header, footer{
+header,
+footer {
     color: white;
     justify-content: center;
 }
@@ -42,7 +43,7 @@ footer {
     height: 3rem;
 }
 
-.transpiler-button{
+.transpiler-button {
     transition-duration: 0.4s;
     background-image: linear-gradient(60deg, #FBAB7E 0%, #F7CE68 80%);
     color: #000000;
@@ -54,8 +55,8 @@ footer {
     height: 3rem;
 }
 
-.transpiler-button:hover{
-    background-image: linear-gradient(60deg, #F7CE68 0%, #F7CE68 100%); 
+.transpiler-button:hover {
+    background-image: linear-gradient(60deg, #F7CE68 0%, #F7CE68 100%);
     font-size: 1.1rem;
 }
 
@@ -87,7 +88,7 @@ footer {
     align-items: center;
 }
 
-.box-example{
+.box-example {
     background-color: #3ed2ff;
     font-family: monospace;
     font-size: 1rem;
@@ -101,4 +102,17 @@ footer {
     max-width: 30px;
     margin-left: 5px;
     border-radius: 50%;
+}
+
+@media (max-width: 888px) {
+    .container-box {
+        flex-direction: column;
+        height: 70vh;
+        justify-content: space-evenly;
+    }
+
+    textarea {
+        width: 90vw;
+        height: 30vh;
+    }
 }
