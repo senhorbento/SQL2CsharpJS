@@ -82,54 +82,55 @@ function ChecarCriacaoTabela(linha) {
 DbParameters = (atributos) => {
     let funcao = "";
     atributos.forEach(atributo => {
-        funcao += `db.Parameter("@${atributo}", obj.${atributo});\n`;
+        funcao += `\tdb.Parameter("@${atributo}", obj.${atributo});\n`;
     });
+    funcao = funcao.slice(0, -1);
     funcao += `
-        db.Execute();\n
-        }\n
-        catch\n
-        {\n
-            throw;\n
-        }\n
-    }\n\n`;
+        db.Execute();
+        }
+        catch
+        {
+            throw;
+        }
+    }\n`;
     return funcao;
 }
 
-CriarFuncaoAtributos = (classe, atributos, tipos) => {
-    let func = `public dynamic SetAttributes(SqlDataReader reader) => new ${classe}() {\n`
-    for(let i = 0; i< atributos;i++){
+function CriarFuncaoAtributos (classe, atributos, tipos) {
+    let funcao = `public dynamic SetAttributes(SqlDataReader reader) => new ${classe}() {\n`;
+    for(let i = 0; i < atributos.length; i++){
         if(tipos[i]=='string')
-            func += `${atributos[i]} = reader["${atributos[i]}"].ToString() ?? "",`;
+            funcao += `\t${atributos[i]} = reader["${atributos[i]}"].ToString() ?? "",\n`;
         if(tipos[i]!='string')
-            func += `${atributos[i]} = (${tipos[i]})reader["${atributos[i]}"],`;
+            funcao += `\t${atributos[i]} = (${tipos[i]})reader["${atributos[i]}"],\n`;
     }
-    func += `\n}`;
-
+    funcao += `};\n`;
+    return funcao;
 }
 
 CriarFuncaoVoid = (classe, sql, atributos, funcao) =>
-    `public int ${funcao}(${classe} obj)\n
-    {\n
-        using DB db = new();\n
-        try\n
-        {\n
-        db.NewCommand(\"${sql}\");\n
+    `public int ${funcao}(${classe} obj)
+    {
+        using DB db = new();
+        try
+        {
+        db.NewCommand(\"${sql}\");
         ${DbParameters(atributos)}`;
 
 
 CriarFuncaoRetornoLista = (classe, sql, atributos) =>
-    `public List<${classe}> Select()\n
-    {\n
-        using DB db = new();\n
-        db.NewCommand(\"${sql}\");\n
-        List<dynamic> list = [];\n
-        using SqlDataReader reader = db.Execute();\n
-        while (reader.Read())\n
-        {\n
-            list.Add(SetAttributes(reader));\n
-        }\n
-        return list;\n
-    {\n`;
+    `public List<${classe}> Select()
+    {
+        using DB db = new();
+        db.NewCommand(\"${sql}\");
+        List<dynamic> list = [];
+        using SqlDataReader reader = db.Execute();
+        while (reader.Read())
+        {
+            list.Add(SetAttributes(reader));
+        }
+        return list;
+    }\n`;
 
 function CriarCrud() {
     const csharp = document.getElementById("outputText").value.split("\n");
@@ -149,10 +150,10 @@ function CriarCrud() {
     });
     atributosVirgula = atributosVirgula.slice(0, -2);
     atributosIgual = atributosIgual.slice(0, -2);
-    const INSERT = `INSERT INTO ${nomeClasse} (${atributosVirgula}) VALUES (${atributosVirgula});`;
-    const SELECT = `SELECT ${atributosVirgula} FROM ${nomeClasse};`;
-    const UPDATE = `UPDATE ${nomeClasse} SET ${atributosIgual} WHERE ${atributosIgual};`;
-    const DELETE = `DELETE FROM ${nomeClasse} WHERE ${atributosIgual};`;
+    const INSERT = `\nINSERT INTO ${nomeClasse} (${atributosVirgula}) VALUES (${atributosVirgula});`;
+    const SELECT = `\nSELECT ${atributosVirgula} FROM ${nomeClasse};`;
+    const UPDATE = `\nUPDATE ${nomeClasse} SET ${atributosIgual} WHERE ${atributosIgual};`;
+    const DELETE = `\nDELETE FROM ${nomeClasse} WHERE ${atributosIgual};`;
     document.getElementById("outputText").value += CriarFuncaoAtributos(nomeClasse, atributos, tipos);
     document.getElementById("outputText").value += CriarFuncaoVoid(nomeClasse, INSERT, atributos, "Create");
     document.getElementById("outputText").value += CriarFuncaoRetornoLista(nomeClasse, SELECT, atributos);
