@@ -150,10 +150,10 @@ function CriarCrud() {
     });
     atributosVirgula = atributosVirgula.slice(0, -2);
     atributosIgual = atributosIgual.slice(0, -2);
-    const INSERT = `\nINSERT INTO ${nomeClasse} (${atributosVirgula}) VALUES (${atributosVirgula});`;
-    const SELECT = `\nSELECT ${atributosVirgula} FROM ${nomeClasse};`;
-    const UPDATE = `\nUPDATE ${nomeClasse} SET ${atributosIgual} WHERE ${atributosIgual};`;
-    const DELETE = `\nDELETE FROM ${nomeClasse} WHERE ${atributosIgual};`;
+    const INSERT = `INSERT INTO ${nomeClasse} (${atributosVirgula}) VALUES (${atributosVirgula});`;
+    const SELECT = `SELECT ${atributosVirgula} FROM ${nomeClasse};`;
+    const UPDATE = `UPDATE ${nomeClasse} SET ${atributosIgual} WHERE ${atributosIgual};`;
+    const DELETE = `DELETE FROM ${nomeClasse} WHERE ${atributosIgual};`;
     document.getElementById("outputText").value += CriarFuncaoAtributos(nomeClasse, atributos, tipos);
     document.getElementById("outputText").value += CriarFuncaoVoid(nomeClasse, INSERT, atributos, "Create");
     document.getElementById("outputText").value += CriarFuncaoRetornoLista(nomeClasse, SELECT, atributos);
