@@ -79,21 +79,57 @@ function ChecarCriacaoTabela(linha) {
     return false;
 }
 
-function DbParameters(atributos) {
+DbParameters = (atributos) => {
     let funcao = "";
     atributos.forEach(atributo => {
         funcao += `db.Parameter("@${atributo}", obj.${atributo});\n`;
     });
-    funcao += "db.Execute();\n}\ncatch\n{\nthrow;\n}\n}\n\n";
+    funcao += `
+        db.Execute();\n
+        }\n
+        catch\n
+        {\n
+            throw;\n
+        }\n
+    }\n\n`;
     return funcao;
 }
 
+CriarFuncaoAtributos = (classe, atributos, tipos) => {
+    let func = `public dynamic SetAttributes(SqlDataReader reader) => new ${classe}() {\n`
+    for(let i = 0; i< atributos;i++){
+        if(tipos[i]=='string')
+            func += `${atributos[i]} = reader["${atributos[i]}"].ToString() ?? "",`;
+        if(tipos[i]!='string')
+            func += `${atributos[i]} = (${tipos[i]})reader["${atributos[i]}"],`;
+    }
+    func += `\n}`;
+
+}
+
 CriarFuncaoVoid = (classe, sql, atributos, funcao) =>
-    `public int ${funcao}(${classe} obj)\n{\nusing DB db = new();\ntry\n{\ndb.NewCommand(\"${sql}\");\n${DbParameters(atributos)}`;
+    `public int ${funcao}(${classe} obj)\n
+    {\n
+        using DB db = new();\n
+        try\n
+        {\n
+        db.NewCommand(\"${sql}\");\n
+        ${DbParameters(atributos)}`;
 
 
 CriarFuncaoRetornoLista = (classe, sql, atributos) =>
-    `public List<${classe}> Select()\n{\nusing DB db = new();\ntry\n{\ndb.NewCommand(\"${sql}\");\n${DbParameters([])}`;
+    `public List<${classe}> Select()\n
+    {\n
+        using DB db = new();\n
+        db.NewCommand(\"${sql}\");\n
+        List<dynamic> list = [];\n
+        using SqlDataReader reader = db.Execute();\n
+        while (reader.Read())\n
+        {\n
+            list.Add(SetAttributes(reader));\n
+        }\n
+        return list;\n
+    {\n`;
 
 function CriarCrud() {
     const csharp = document.getElementById("outputText").value.split("\n");
@@ -117,6 +153,7 @@ function CriarCrud() {
     const SELECT = `SELECT ${atributosVirgula} FROM ${nomeClasse};`;
     const UPDATE = `UPDATE ${nomeClasse} SET ${atributosIgual} WHERE ${atributosIgual};`;
     const DELETE = `DELETE FROM ${nomeClasse} WHERE ${atributosIgual};`;
+    document.getElementById("outputText").value += CriarFuncaoAtributos(nomeClasse, atributos, tipos);
     document.getElementById("outputText").value += CriarFuncaoVoid(nomeClasse, INSERT, atributos, "Create");
     document.getElementById("outputText").value += CriarFuncaoRetornoLista(nomeClasse, SELECT, atributos);
     document.getElementById("outputText").value += CriarFuncaoVoid(nomeClasse, UPDATE, atributos, "Update");
