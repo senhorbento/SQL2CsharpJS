@@ -59,6 +59,8 @@ function RetornarNomeTipo(linha) {
 }
 
 function ProcurarTipos(linha) {
+    if (linha.indexOf("CHAR") > -1) return "string ";
+    if (linha.indexOf("TEXT") > -1) return "string ";
     if (linha.indexOf("TINYINT") > -1) return "sbyte ";
     if (linha.indexOf("SMALLINT") > -1) return "short ";
     if (linha.indexOf("BIGINT") > -1) return "long ";
@@ -66,9 +68,8 @@ function ProcurarTipos(linha) {
     if (linha.indexOf("FLOAT") > -1) return "float ";
     if (linha.indexOf("DOUBLE") > -1) return "double ";
     if (linha.indexOf("DECIMAL") > -1) return "decimal ";
-    if (linha.indexOf("CHAR") > -1) return "string ";
-    if (linha.indexOf("TEXT") > -1) return "string ";
     if (linha.indexOf("BOOLEAN") > -1) return "bool ";
+    if (linha.indexOf("BIT") > -1) return "bool ";
     if (linha.indexOf("DATE") > -1) return "DateTime ";
     return "string ";
 }
@@ -118,12 +119,12 @@ CriarFuncaoVoid = (classe, sql, atributos, funcao) =>
         ${DbParameters(atributos)}`;
 
 
-CriarFuncaoRetornoLista = (classe, sql, atributos) =>
-    `public List<${classe}> Select()
+CriarFuncaoRetornoLista = (classe, sql) =>
+    `public List<${classe}> SelectAll()
     {
         using DB db = new();
         db.NewCommand(\"${sql}\");
-        List<dynamic> list = [];
+        List<${classe}> list = [];
         using SqlDataReader reader = db.Execute();
         while (reader.Read())
         {
@@ -155,8 +156,8 @@ function CriarCrud() {
     const UPDATE = `UPDATE ${nomeClasse} SET ${atributosIgual} WHERE ${atributosIgual};`;
     const DELETE = `DELETE FROM ${nomeClasse} WHERE ${atributosIgual};`;
     document.getElementById("outputText").value += CriarFuncaoAtributos(nomeClasse, atributos, tipos);
-    document.getElementById("outputText").value += CriarFuncaoVoid(nomeClasse, INSERT, atributos, "Create");
-    document.getElementById("outputText").value += CriarFuncaoRetornoLista(nomeClasse, SELECT, atributos);
+    document.getElementById("outputText").value += CriarFuncaoVoid(nomeClasse, INSERT, atributos, "Insert");
+    document.getElementById("outputText").value += CriarFuncaoRetornoLista(nomeClasse, SELECT);
     document.getElementById("outputText").value += CriarFuncaoVoid(nomeClasse, UPDATE, atributos, "Update");
     document.getElementById("outputText").value += CriarFuncaoVoid(nomeClasse, DELETE, atributos, "Delete");
 }
