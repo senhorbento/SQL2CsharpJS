@@ -7,7 +7,15 @@ ${props.map(p => `\t\tpublic ${p.type} ${p.name} { get; set; } = ${p.inicializat
     }
 }`;
 
-export const REPOSITORY_TEMPLATE = (className, props) => `
+
+
+export const REPOSITORY_TEMPLATE = (className, props) => {
+    const columns = `${props.map(p => p.name).join(', ')}`;
+    const parameters = `${props.map(p => '@' + p.name).join(', ')}`;
+    const setCondition = `${props.map(p => `${p.name}=@${p.name}`).join(', ')}`;
+    const andCondition = `${props.map(p => `${p.name}=@${p.name}`).join(' AND ')}`;
+    const dbParameters = `${props.map(p => `\t\t\tdb.Parameter("@${p.name}", obj.${p.name});`).join('\n')}`;
+    return `
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using API.Models;
@@ -25,31 +33,31 @@ ${props.map(p => { return p.type === 'string' ? `\t\t\t${p.name} = reader["${p.n
         public int Insert(${className} obj) 
         {
             using DB db = new();
-            db.NewCommand("INSERT INTO ${className} (${props.map(p => p.name).join(', ')}) VALUES (${props.map(p => '@' + p.name).join(', ')});");
-${props.map(p => `\t\t\tdb.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
+            db.NewCommand("INSERT INTO ${className} (${columns}) VALUES (${parameters});");
+${dbParameters}
             return db.Execute();
         }
 
         public int Update(${className} obj) 
         {
             using DB db = new();
-            db.NewCommand("UPDATE ${className} SET ${props.map(p => `${p.name}=@${p.name}`).join(', ')} WHERE ${props.map(p => `${p.name}=@${p.name}`).join(' AND ')};");
-${props.map(p => `\t\t\tdb.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
+            db.NewCommand("UPDATE ${className} SET ${setCondition} WHERE ${andCondition};");
+${dbParameters}
             return db.Execute();
         }
 
         public int Delete(${className} obj) 
         {
             using DB db = new();
-            db.NewCommand("DELETE FROM ${className} WHERE ${props.map(p => `${p.name}=@${p.name}`).join(' AND ')};");
-${props.map(p => `\t\t\tdb.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
+            db.NewCommand("DELETE FROM ${className} WHERE ${andCondition};");
+${dbParameters}
             return db.Execute();
         }
 
         public List<${className}> SelectAll() 
         {
             using DB db = new();
-            db.NewCommand("SELECT ${props.map(p => p.name).join(', ')} FROM ${className};");
+            db.NewCommand("SELECT ${columns} FROM ${className};");
             List<${className}> list = new();
             using SqlDataReader reader = db.Execute();
             while (reader.Read()) {
@@ -59,6 +67,8 @@ ${props.map(p => `\t\t\tdb.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
         }
     }
 }`;
+}
+
 
 export const SERVICE_TEMPLATE = (className, props) => `
 using API.Models;
