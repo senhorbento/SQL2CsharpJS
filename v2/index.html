@@ -9,7 +9,7 @@
     <meta name="description" content="Um simples utilitário que converte tabelas de SQL para classes em C#.">
     <meta name="theme-color" content="#0093E9">
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="script.js"></script>
+    <script type="module" src="script.js"></script>
     <title>SQL to C#</title>
 </head>
 
@@ -23,15 +23,9 @@
             <textarea name="output" id="outputText" placeholder="A classe gerada será mostrada aqui."
                 class="BoxTexto"></textarea>
         </div>
-        <div style="display: flex;align-items:center;flex-direction: column;">
-            <button class="transpiler-button" onclick="Converter();">Converter</button>
-            <div style="display: flex;align-items:center;">
-                Criar CRUD
-                <label class="switch">
-                    <input type="checkbox" onclick="alterarCriarCrud();">
-                    <span class="slider round"></span>
-                </label>
-            </div>
+        <div style="display: flex; align-items: center; align-content: center;">
+            <button class="button transpiler-button" id="convertBtn">Converter</button>
+            <button class="button zip-button" id="downloadBtn">Download ZIP</button>
         </div>
     </main>
     <section class="container-description">
