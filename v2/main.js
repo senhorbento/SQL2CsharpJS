@@ -4,7 +4,13 @@ import {
     SERVICE_TEMPLATE,
     CONTROLLER_TEMPLATE,
     DB_TEMPLATE,
-    CONSTANTS_TEMPLATE
+    CONSTANTS_TEMPLATE,
+    TOKENSERVICE_TEMPLATE,
+    PROPERTIES_TEMPLATE,
+    CSPROJ_TEMPLATE,
+    APISLN_TEMPLATE,
+    PROGRAM_TEMPLATE,
+    PROGRAMSERVICE_TEMPLATE
 } from './constants.js';
 
 import JSZip from 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm';
@@ -80,13 +86,25 @@ export async function generateZipFromSql(sql) {
     const controllerContent = CONTROLLER_TEMPLATE(className);
     const dbContent = DB_TEMPLATE;
     const constantsContent = CONSTANTS_TEMPLATE;
+    const tokenServiceContent = TOKENSERVICE_TEMPLATE;
+    const launchSettingsContent = PROPERTIES_TEMPLATE;
+    const csprojContent = CSPROJ_TEMPLATE;
+    const apiSlnContent = APISLN_TEMPLATE;
+    const programContent = PROGRAM_TEMPLATE;
+    const ProgramServices = PROGRAMSERVICE_TEMPLATE;
 
-    zip.file(`Models/${className}.cs`, modelContent);
-    zip.file(`Repositories/${className}Repository.cs`, repoContent);
-    zip.file(`Services/${className}Service.cs`, serviceContent);
-    zip.file(`Controllers/${className}Controller.cs`, controllerContent);
-    zip.file(`Core/DB.cs`, dbContent);
-    zip.file(`Core/Constants.cs`, constantsContent);
+    zip.file(`API/Models/${className}.cs`, modelContent);
+    zip.file(`API/Repositories/${className}Repository.cs`, repoContent);
+    zip.file(`API/Services/${className}Service.cs`, serviceContent);
+    zip.file(`API/Services/TokenService.cs`, tokenServiceContent);
+    zip.file(`API/Controllers/${className}Controller.cs`, controllerContent);
+    zip.file(`API/Core/DB.cs`, dbContent);
+    zip.file(`API/Core/Constants.cs`, constantsContent);
+    zip.file(`API/Properties/launchSettings.json`, launchSettingsContent);
+    zip.file(`API/API.csproj`, csprojContent);
+    zip.file(`API/API.sln`, apiSlnContent);
+    zip.file(`API/Program.cs`, programContent);
+    zip.file(`API/ProgramServices.cs`, ProgramServices);
 
     const blob = await zip.generateAsync({ type: "blob" });
     return blob;
