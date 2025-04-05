@@ -15,24 +15,29 @@ import {
 
 import JSZip from 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm';
 
-let className = "";
-let properties = [];
-let types = [];
-
-export function parseSqlToClass(input) {
+export function parseSqlToClasses(input) {
     const lines = input.split(/\r?\n/);
-    let props = [];
-    className = "";
-    properties = [];
-    types = [];
+    let currentClass = null;
+    let classes = [];
+    let className = "";
+    let properties = [];
 
     lines.forEach((line) => {
         line = line.trim();
-        if (!line || line.startsWith("--")) return;
+        if (!line) return;
 
         if (line.toUpperCase().startsWith("CREATE TABLE")) {
+            if (currentClass) {
+                currentClass.properties = properties;
+                classes.push(currentClass);
+            }
+
             const match = line.match(/CREATE TABLE (\w+)/i);
-            if (match) className = match[1];
+            if (match) {
+                className = match[1];
+                currentClass = { name: className, properties: [] };
+                properties = [];
+            }
             return;
         }
 
@@ -46,18 +51,17 @@ export function parseSqlToClass(input) {
 
         let csType = mapToCSharpType(type);
         if (csType) {
-            properties.push(property);
-            types.push(csType);
-            props.push({ name: property, type: csType });
+            properties.push({ name: property, type: csType });
+            currentClass.properties.push({ name: property, type: csType });
         }
     });
 
-    return props;
-}
+    if (currentClass) {
+        currentClass.properties = properties;
+        classes.push(currentClass);
+    }
 
-export function getClassName(sql) {
-    const match = sql.match(/CREATE TABLE (\w+)/i);
-    return match ? match[1] : '';
+    return classes;
 }
 
 function mapToCSharpType(sqlType) {
@@ -75,15 +79,22 @@ function mapToCSharpType(sqlType) {
 }
 
 export async function generateZipFromSql(sql) {
-    const parsedProps = parseSqlToClass(sql);
-    if (!className || parsedProps.length === 0) throw new Error("Invalid SQL input");
+    const parsedClasses = parseSqlToClasses(sql);
+    if (parsedClasses.length === 0) throw new Error("Invalid SQL input");
 
     const zip = new JSZip();
 
-    const modelContent = MODEL_TEMPLATE(className, parsedProps);
-    const repoContent = REPOSITORY_TEMPLATE(className, parsedProps);
-    const serviceContent = SERVICE_TEMPLATE(className, parsedProps);
-    const controllerContent = CONTROLLER_TEMPLATE(className);
+    parsedClasses.forEach(element => {
+        const modelContent = MODEL_TEMPLATE(element.name, element.properties);
+        const repoContent = REPOSITORY_TEMPLATE(element.name, element.properties);
+        const serviceContent = SERVICE_TEMPLATE(element.name, element.properties);
+        const controllerContent = CONTROLLER_TEMPLATE(element.name);
+        zip.file(`API/Models/${element.name}.cs`, modelContent);
+        zip.file(`API/Repositories/${element.name}Repository.cs`, repoContent);
+        zip.file(`API/Services/${element.name}Service.cs`, serviceContent);
+        zip.file(`API/Controllers/${element.name}Controller.cs`, controllerContent);
+    });
+
     const dbContent = DB_TEMPLATE;
     const constantsContent = CONSTANTS_TEMPLATE;
     const tokenServiceContent = TOKENSERVICE_TEMPLATE;
@@ -93,11 +104,7 @@ export async function generateZipFromSql(sql) {
     const programContent = PROGRAM_TEMPLATE;
     const ProgramServices = PROGRAMSERVICE_TEMPLATE;
 
-    zip.file(`API/Models/${className}.cs`, modelContent);
-    zip.file(`API/Repositories/${className}Repository.cs`, repoContent);
-    zip.file(`API/Services/${className}Service.cs`, serviceContent);
     zip.file(`API/Services/TokenService.cs`, tokenServiceContent);
-    zip.file(`API/Controllers/${className}Controller.cs`, controllerContent);
     zip.file(`API/Core/DB.cs`, dbContent);
     zip.file(`API/Core/Constants.cs`, constantsContent);
     zip.file(`API/Properties/launchSettings.json`, launchSettingsContent);

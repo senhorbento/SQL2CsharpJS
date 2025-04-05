@@ -1,4 +1,4 @@
-import { generateZipFromSql, parseSqlToClass, getClassName } from './main.js';
+import { generateZipFromSql, parseSqlToClasses } from './main.js';
 import { MODEL_TEMPLATE } from './constants.js';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -9,10 +9,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   convertBtn.addEventListener('click', () => {
     const sql = inputField.value;
+    console.log(sql)
+    let modelPreview = "";
     try {
-      const parsedProps = parseSqlToClass(sql);
-      const className = getClassName(sql);
-      const modelPreview = MODEL_TEMPLATE(className, parsedProps);
+      const classes = parseSqlToClasses(sql);
+      console.log(classes)
+      classes.forEach(element => {
+        modelPreview += MODEL_TEMPLATE(element.name, element.properties);
+      });
       outputField.value = modelPreview;
     } catch (err) {
       outputField.value = `// Erro: ${err.message}`;
@@ -21,12 +25,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   downloadBtn.addEventListener('click', async () => {
     const sql = inputField.value;
-    const className = getClassName(sql);
     try {
       const blob = await generateZipFromSql(sql);
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = `${className}.zip`;
+      link.download = `API.zip`;
       link.click();
     } catch (err) {
       alert("Erro ao gerar o ZIP: " + err.message);
