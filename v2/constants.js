@@ -113,7 +113,7 @@ namespace API.Controllers
     }
 }`;
 
-export const DB_TEMPLATE = () => `
+export const DB_TEMPLATE = `
 using Microsoft.Data.Sqlite;
 using SQLitePCL;
 using System.Data;
@@ -167,4 +167,19 @@ public class DB : IDisposable
         Disconnect();
     }
 }
+`;
+
+export const CONSTANTS_TEMPLATE = 
 `
+namespace API.Core
+{
+    public class Constants
+    {
+        public class DB
+        {
+            private const string _HOST_ = "../DB/Beautiful.sqlite";
+            public const string _CONNECTION_STRING_ = $"Data Source={_HOST_};";
+        }
+    }
+}
+`;

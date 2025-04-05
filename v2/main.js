@@ -3,7 +3,8 @@ import {
     REPOSITORY_TEMPLATE,
     SERVICE_TEMPLATE,
     CONTROLLER_TEMPLATE,
-    DB_TEMPLATE
+    DB_TEMPLATE,
+    CONSTANTS_TEMPLATE
 } from './constants.js';
 
 import JSZip from 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm';
@@ -77,13 +78,15 @@ export async function generateZipFromSql(sql) {
     const repoContent = REPOSITORY_TEMPLATE(className, parsedProps);
     const serviceContent = SERVICE_TEMPLATE(className, parsedProps);
     const controllerContent = CONTROLLER_TEMPLATE(className);
-    const dbContent = DB_TEMPLATE();
+    const dbContent = DB_TEMPLATE;
+    const constantsContent = CONSTANTS_TEMPLATE;
 
     zip.file(`Models/${className}.cs`, modelContent);
     zip.file(`Repositories/${className}Repository.cs`, repoContent);
     zip.file(`Services/${className}Service.cs`, serviceContent);
     zip.file(`Controllers/${className}Controller.cs`, controllerContent);
     zip.file(`Core/DB.cs`, dbContent);
+    zip.file(`Core/Constants.cs`, constantsContent);
 
     const blob = await zip.generateAsync({ type: "blob" });
     return blob;
