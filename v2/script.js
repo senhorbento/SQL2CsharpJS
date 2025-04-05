@@ -1,5 +1,5 @@
 import { generateZipFromSql, parseSqlToClasses } from './main.js';
-import { MODEL_TEMPLATE } from './constants.js';
+import { MODEL_TEMPLATE_CS } from './cSharpTemplate.js';
 
 window.addEventListener('DOMContentLoaded', () => {
   const convertBtn = document.getElementById('convertBtn');
@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const classes = parseSqlToClasses(sql);
       console.log(classes)
       classes.forEach(element => {
-        modelPreview += MODEL_TEMPLATE(element.name, element.properties);
+        modelPreview += MODEL_TEMPLATE_CS(element.name, element.properties);
       });
       outputField.value = modelPreview;
     } catch (err) {

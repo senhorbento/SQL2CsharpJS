@@ -1,9 +1,9 @@
-export const MODEL_TEMPLATE = (className, props) => `
+export const MODEL_TEMPLATE_CS = (className, props) => `
 using System;
 namespace API.Models 
 {
     public class ${className} {
-${props.map(p => `\t\tpublic ${p.type} ${p.name} { get; set; } = ${p.inicialization};`).join('\n')}
+${props.map(p => `\t\tpublic ${p.type} ${p.name} { get; set; } = ${p.initialization};`).join('\n')}
     }
 }`;
 
