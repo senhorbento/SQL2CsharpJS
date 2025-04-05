@@ -19,25 +19,18 @@ export function parseSqlToClasses(input) {
     const lines = input.split(/\r?\n/);
     let currentClass = null;
     let classes = [];
-    let className = "";
-    let properties = [];
 
     lines.forEach((line) => {
         line = line.trim();
         if (!line) return;
 
         if (line.toUpperCase().startsWith("CREATE TABLE")) {
-            if (currentClass) {
-                currentClass.properties = properties;
+            if (currentClass)
                 classes.push(currentClass);
-            }
 
             const match = line.match(/CREATE TABLE (\w+)/i);
-            if (match) {
-                className = match[1];
-                currentClass = { name: className, properties: [] };
-                properties = [];
-            }
+            if (match)
+                currentClass = { name: match[1], properties: [] };
             return;
         }
 
@@ -49,33 +42,27 @@ export function parseSqlToClasses(input) {
         const property = namePart.replace(/[,()]/g, "");
         let type = typePart.replace(/\(.*?\)/g, "").toUpperCase();
 
-        let csType = mapToCSharpType(type);
-        if (csType) {
-            properties.push({ name: property, type: csType });
-            currentClass.properties.push({ name: property, type: csType });
-        }
+        let csTypeInicialization = mapToCSharpType(type);
+        if (csTypeInicialization) currentClass.properties.push({ name: property, type: csTypeInicialization.type, inicialization: csTypeInicialization.inicialization });
     });
 
-    if (currentClass) {
-        currentClass.properties = properties;
-        classes.push(currentClass);
-    }
+    if (currentClass) classes.push(currentClass);
 
     return classes;
 }
 
 function mapToCSharpType(sqlType) {
-    if (sqlType.includes("CHAR") || sqlType.includes("TEXT")) return "string";
-    if (sqlType.includes("TINYINT")) return "sbyte";
-    if (sqlType.includes("SMALLINT")) return "short";
-    if (sqlType.includes("BIGINT")) return "long";
-    if (sqlType.includes("INT")) return "int";
-    if (sqlType.includes("FLOAT")) return "float";
-    if (sqlType.includes("DOUBLE")) return "double";
-    if (sqlType.includes("DECIMAL")) return "decimal";
-    if (sqlType.includes("BOOLEAN") || sqlType.includes("BIT")) return "bool";
-    if (sqlType.includes("DATE")) return "DateTime";
-    return "string";
+    if (sqlType.includes("CHAR") || sqlType.includes("TEXT")) return { type: "string", inicialization: "\"\"" };
+    if (sqlType.includes("TINYINT")) return { type: "sbyte", inicialization: "0" };
+    if (sqlType.includes("SMALLINT")) return { type: "short", inicialization: "0" };
+    if (sqlType.includes("BIGINT")) return { type: "long", inicialization: "0" };
+    if (sqlType.includes("INT")) return { type: "int", inicialization: "0" };
+    if (sqlType.includes("FLOAT")) return { type: "float", inicialization: "0" };
+    if (sqlType.includes("DOUBLE")) return { type: "double", inicialization: "0" };
+    if (sqlType.includes("DECIMAL")) return { type: "decimal", inicialization: "0" };
+    if (sqlType.includes("BOOLEAN") || sqlType.includes("BIT")) return { type: "bool", inicialization: "0" };
+    if (sqlType.includes("DATE")) return { type: "DateTime", inicialization: "new()" };
+    return { type: "string", inicialization: "\"\"" };
 }
 
 export async function generateZipFromSql(sql) {

@@ -3,7 +3,7 @@ using System;
 namespace API.Models 
 {
     public class ${className} {
-    ${props.map(p => `        public ${p.type} ${p.name} { get; set; }`).join('\n')}
+${props.map(p => `\t\tpublic ${p.type} ${p.name} { get; set; } = ${p.inicialization};`).join('\n')}
     }
 }`;
 
@@ -19,14 +19,14 @@ namespace API.Repositories
     {
         public ${className} SetAttributes(SqlDataReader reader) => new ${className} 
         {
-        ${props.map(p => { return p.type === 'string' ? `            ${p.name} = reader["${p.name}"].ToString() ?? "",` : `            ${p.name} = (${p.type})reader["${p.name}"],`; }).join('\n')}
+${props.map(p => { return p.type === 'string' ? `\t\t\t${p.name} = reader["${p.name}"].ToString() ?? "",` : `\t\t\t${p.name} = (${p.type})reader["${p.name}"],`; }).join('\n')}
         };
 
         public int Insert(${className} obj) 
         {
             using DB db = new();
             db.NewCommand("INSERT INTO ${className} (${props.map(p => p.name).join(', ')}) VALUES (${props.map(p => '@' + p.name).join(', ')});");
-            ${props.map(p => `            db.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
+${props.map(p => `\t\t\tdb.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
             return db.Execute();
         }
 
@@ -34,7 +34,7 @@ namespace API.Repositories
         {
             using DB db = new();
             db.NewCommand("UPDATE ${className} SET ${props.map(p => `${p.name}=@${p.name}`).join(', ')} WHERE ${props.map(p => `${p.name}=@${p.name}`).join(' AND ')};");
-            ${props.map(p => `            db.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
+${props.map(p => `\t\t\tdb.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
             return db.Execute();
         }
 
@@ -42,7 +42,7 @@ namespace API.Repositories
         {
             using DB db = new();
             db.NewCommand("DELETE FROM ${className} WHERE ${props.map(p => `${p.name}=@${p.name}`).join(' AND ')};");
-            ${props.map(p => `            db.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
+${props.map(p => `\t\t\tdb.Parameter("@${p.name}", obj.${p.name});`).join('\n')}
             return db.Execute();
         }
 
@@ -72,17 +72,20 @@ namespace API.Services
 
         public int Insert(${className} obj) 
         {
-${props.map(p => `            if (obj.${p.name} == null) throw new ArgumentException("${p.name} is required");`).join('\n')}
+${props.map(p => `\t\t\tif (obj.${p.name} == null) throw new ArgumentException("${p.name} is required");`).join('\n')}
             return _repo.Insert(obj);
         }
 
         public int Update(${className} obj) 
         {
-${props.map(p => `            if (obj.${p.name} == null) throw new ArgumentException("${p.name} is required");`).join('\n')}
+${props.map(p => `\t\t\tif (obj.${p.name} == null) throw new ArgumentException("${p.name} is required");`).join('\n')}
             return _repo.Update(obj);
         }
 
-        public int Delete(${className} obj) => _repo.Delete(obj);
+        public int Delete(${className} obj) {
+${props.map(p => `\t\t\tif (obj.${p.name} == null) throw new ArgumentException("${p.name} is required");`).join('\n')}
+            _repo.Delete(obj);
+        }
         public List<${className}> GetAll() => _repo.SelectAll();
     }
 }`;
